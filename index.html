@@ -1024,6 +1024,7 @@ img, video { max-width: 100%; height: auto; }
             <button onclick="window.addItemToPOList()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs btn-touch">
               + เพิ่มรายการเข้าใบรับของ
             </button>
+            <button onclick="window.openMultiReceive()" class="w-full py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl text-xs btn-touch mt-2">📋 เลือกหลายรายการจากตารางสินค้า</button>
           </div>
 
           <!-- Editable receiving worksheet — every line here can still be adjusted (quantity,
@@ -2574,6 +2575,12 @@ for (const p of productsList) {
             });
           }
           await _H.upsertChunks(client, 'product_variants', _varD.changed, 'id');
+// รูปรายขนาด: เขียน image_url เฉพาะขนาดที่มี URL จริงในเครื่อง
+for (const [pp, vv] of _variantOwner) {
+  if (vv && typeof vv.imageUrl === 'string' && /^https?:\/\//i.test(vv.imageUrl)) {
+    try { await client.from('product_variants').update({ image_url: vv.imageUrl }).eq('id', toUUID(vv.id)); } catch (e) { console.warn('variant image_url', e); }
+  }
+}
           _varD.commit();
           if (_barcodeRepairs.length) {
             window.persist?.();
@@ -5340,6 +5347,7 @@ for (const p of productsList) {
                 addedVar++;
               }else{
                 if(rv.min_stock!=null) lv.minStock=+rv.min_stock;
+                if(rv.image_url) lv.imageUrl=rv.image_url;
                 // อย่าเขียนทับสต็อกที่ยังมีคำสั่งปรับค้างอยู่ในคิว ไม่งั้นการโหลดใหม่จะย้อนค่าที่เพิ่งตั้ง
                 if(rv.stock_seeded && !hasPendingAdj(lv.id)){ lv.stock=+(rv.stock_quantity||0); lv._seeded=true; stockUpd++; }
               }
@@ -5347,7 +5355,7 @@ for (const p of productsList) {
           }
         }else if(!existingId){
           const remoteVariants=(rawVarsByProduct[p.id]||[]).map(v=>({
-            id:v.id,minStock:(v.min_stock!=null?+v.min_stock:(+p.min_stock_alert||5)),sizeName:v.variant_name||'ปกติ',unit:v.unit||'ชิ้น',barcode:v.barcode||'',sku:v.sku||'',_seeded:!!v.stock_seeded,
+            id:v.id,minStock:(v.min_stock!=null?+v.min_stock:(+p.min_stock_alert||5)),sizeName:v.variant_name||'ปกติ',unit:v.unit||'ชิ้น',imageUrl:v.image_url||null,barcode:v.barcode||'',sku:v.sku||'',_seeded:!!v.stock_seeded,
             cost:+(v.cost_price||0),price:+(v.price||0),stock:(hasPendingAdj(v.id)?0:+(v.stock_quantity||0)),
             fractions:(fracsByVariant[v.id]||[]).map(f=>({
               id:f.id,fractionName:f.fraction_name,
@@ -5477,6 +5485,8 @@ for (const p of productsList) {
         <input type="file" id="pm-photo-input" accept="image/*" capture="environment" class="hidden" onchange="window.handleProductPhotoSelect(event)">
       </label>
       <input id="pm-image" placeholder="หรือพิมพ์ Emoji" class="w-24 mt-1.5 border p-1.5 rounded-lg text-center text-xs outline-none" oninput="window.updateProductEmojiPreview()">
+<div class="flex gap-1 mt-1.5 justify-center flex-wrap"><button type="button" onclick="window.pmPickFromGallery()" class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-[11px] font-bold">🖼️ เลือกจากคลัง</button></div>
+<div class="flex gap-1 mt-1 justify-center"><input id="pm-image-url" placeholder="วางลิงก์รูป" class="w-28 border p-1 rounded-lg text-[11px] outline-none"><button type="button" onclick="window.pmUseUrl()" class="px-2 py-1 bg-slate-100 rounded-lg text-[11px] font-bold">ใช้</button></div>
     </div>
     <div class="flex-1 grid grid-cols-1 gap-2 text-xs">
       <input id="pm-name" placeholder="ชื่อสินค้า *" class="border p-3 rounded-xl font-bold outline-none focus:ring-2 focus:ring-emerald-500">
@@ -6181,7 +6191,7 @@ window.saveProduct = async function() {
     imageEmoji = '';
     window._pmDuplicateImageUrl = null;
   } else if (pmPhotoChanged) {
-    if (pmPhotoDataUrl) {
+    if (pmPhotoDataUrl && /^https?:\/\//i.test(pmPhotoDataUrl)) { imageUrl = pmPhotoDataUrl; } else if (pmPhotoDataUrl) {
       // Try to upload the compressed photo to Supabase Storage so it's usable across devices;
       // fall back to keeping the compressed data URL locally if offline or upload fails.
       try {
@@ -9386,8 +9396,12 @@ button:not(:disabled):active { transform: scale(.96); }
         `<td><input class="e-price" type="number" value="${v.price ?? 0}" style="${INP}"></td>` +
         `<td><input class="e-stock" type="number" value="${v.stock ?? 0}" style="${INP}"></td>` +
         `<td><input class="e-min" type="number" value="${v.minStock ?? 0}" style="${INP}"></td>` +
+        `<td style="white-space:nowrap"><img class="e-thumb" src="" alt="" style="width:36px;height:36px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;vertical-align:middle;background:#f8fafc"> <button class="e-img" style="border:0;background:#e0e7ff;color:#3730a3;border-radius:8px;padding:6px 8px;font-weight:700">🖼️</button></td>` +
         `<td><button class="e-del" style="border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:6px 10px;font-weight:700">ลบ</button></td>`;
       tr.querySelector('.e-del').onclick = () => { tr.dataset.delete = tr.dataset.delete === '1' ? '' : '1'; tr.style.opacity = tr.dataset.delete ? '.4' : '1'; };
+      tr.dataset.img = v.imageUrl || '';
+      setThumb(tr);
+      tr.querySelector('.e-img').onclick = () => pickImage(tr);
       exEl.appendChild(tr);
     });
     // ปุ่มขนาดมาตรฐาน: ตั้งติ๊กไว้เฉพาะที่ยังไม่มี
@@ -9402,6 +9416,73 @@ button:not(:disabled):active { transform: scale(.96); }
       stdEl.appendChild(lb);
     });
   }
+
+  function setThumb(tr) {
+    if (typeof tr.onPick === 'function') tr.onPick(tr.dataset.img || '');
+    const img = tr.querySelector('.e-thumb'); if (!img) return;
+    if (tr.dataset.img) { img.src = tr.dataset.img; img.style.display = ''; } else { img.removeAttribute('src'); img.style.display = 'none'; }
+  }
+  function ensurePicker() {
+    let m = document.getElementById('pos-imgpick'); if (m) return m;
+    m = document.createElement('div'); m.id = 'pos-imgpick';
+    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9998;background:rgba(15,23,42,.6);padding:12px;overflow:auto';
+    m.innerHTML = '<div style="max-width:720px;margin:12px auto;background:#fff;border-radius:16px;padding:14px;font-family:Sarabun,sans-serif;color:#0f172a">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">🖼️ เลือกรูปของขนาดนี้</b><button id="pip-close" style="border:0;background:#e2e8f0;border-radius:10px;padding:6px 12px;font-weight:700">ปิด</button></div>' +
+      '<div style="margin:10px 0;display:flex;gap:6px;align-items:center"><input id="pip-q" placeholder="ค้นหาชื่อไฟล์หรือรหัส" style="flex:1;padding:9px;border:1px solid #cbd5e1;border-radius:10px;min-height:40px">' +
+      '<label style="padding:9px 12px;background:#4f46e5;color:#fff;border-radius:10px;font-weight:700;cursor:pointer">📷 อัปโหลด<input id="pip-file" type="file" accept="image/*" style="display:none"></label></div>' +
+      '<div id="pip-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;max-height:58vh;overflow:auto"></div>' +
+      '<div id="pip-msg" style="font-size:13px;color:#b91c1c;margin-top:6px"></div>' +
+      '<button id="pip-clear" style="margin-top:10px;width:100%;padding:12px;border-radius:12px;border:0;background:#fee2e2;color:#991b1b;font-weight:800">ลบรูปของขนาดนี้</button></div>';
+    document.body.appendChild(m);
+    document.getElementById('pip-close').onclick = () => { m.style.display = 'none'; };
+    m.addEventListener('click', e => { if (e.target === m) m.style.display = 'none'; });
+    return m;
+  }
+  let _pickTr = null, _pickFiles = [];
+  function urlOf(name) {
+    const c = window.getSupabaseClient?.(); if (!c) return null;
+    return c.storage.from('product-images').getPublicUrl(name).data.publicUrl;
+  }
+  function renderPickGrid(q) {
+    const grid = document.getElementById('pip-grid'); grid.innerHTML = '';
+    const term = (q || '').trim().toLowerCase();
+    _pickFiles.filter(f => !term || f.name.toLowerCase().includes(term)).slice(0, 300).forEach(f => {
+      const url = urlOf(f.name); if (!url) return;
+      const b = document.createElement('button'); b.type = 'button';
+      b.style.cssText = 'border:2px solid ' + (_pickTr && _pickTr.dataset.img === url ? '#4f46e5' : '#e2e8f0') + ';border-radius:10px;padding:4px;background:#fff';
+      b.innerHTML = '<img src="' + url + '" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px"><div style="font-size:10px;word-break:break-all;color:#475569">' + esc(f.name) + '</div>';
+      b.onclick = () => { _pickTr.dataset.img = url; setThumb(_pickTr); ensurePicker().style.display = 'none'; };
+      grid.appendChild(b);
+    });
+  }
+  async function pickImage(tr) {
+    _pickTr = tr;
+    const m = ensurePicker(); m.style.display = 'block';
+    const msg = document.getElementById('pip-msg'); msg.textContent = 'กำลังโหลดคลังรูป...';
+    const c = window.getSupabaseClient?.();
+    try {
+      const { data, error } = await c.storage.from('product-images').list('', { limit: 1000, sortBy: { column: 'name', order: 'asc' } });
+      if (error) throw error;
+      _pickFiles = (data || []).filter(f => f.name && /\.(jpg|jpeg|png|webp)$/i.test(f.name));
+      msg.textContent = `คลังรูป ${_pickFiles.length} ไฟล์`;
+    } catch (e) { _pickFiles = []; msg.textContent = 'โหลดคลังรูปไม่ได้: ' + (e.message || e); }
+    renderPickGrid('');
+    document.getElementById('pip-q').oninput = e => renderPickGrid(e.target.value);
+    document.getElementById('pip-clear').onclick = () => { tr.dataset.img = ''; setThumb(tr); m.style.display = 'none'; };
+    document.getElementById('pip-file').onchange = async e => {
+      const file = e.target.files && e.target.files[0]; if (!file) return;
+      const c2 = window.getSupabaseClient?.();
+      msg.textContent = 'กำลังอัปโหลด...';
+      const name = `size-${Date.now()}-${Math.random().toString(36).slice(2, 7)}.jpg`;
+      try {
+        const { error } = await c2.storage.from('product-images').upload(name, file, { contentType: file.type || 'image/jpeg', upsert: false });
+        if (error) throw error;
+        tr.dataset.img = urlOf(name); setThumb(tr); m.style.display = 'none';
+      } catch (err) { msg.textContent = 'อัปโหลดไม่สำเร็จ: ' + (err.message || err); }
+    };
+  }
+
+  window.posPickImage = pickImage;
   function selectedPid() {
     const ids = (typeof selectedProductIds !== 'undefined' && selectedProductIds) ? Array.from(selectedProductIds) : [];
     return ids.length === 1 ? ids[0] : null;
@@ -9434,6 +9515,7 @@ button:not(:disabled):active { transform: scale(.96); }
       if (!(price > 0)) { msg.textContent = `ขนาด "${size}" ต้องมีราคาขายมากกว่า 0`; return; }
       v.sizeName = size; v.cost = num(tr.querySelector('.e-cost'), 0); v.price = price;
       v.stock = num(tr.querySelector('.e-stock'), 0); v.minStock = num(tr.querySelector('.e-min'), 0);
+      if (tr.dataset.img !== undefined) v.imageUrl = tr.dataset.img || null;
       keep.push(v);
     }
     const deleting = exRows.filter(tr => tr.dataset.delete === '1').map(tr => tr.dataset.vid);
@@ -9600,6 +9682,7 @@ button:not(:disabled):active { transform: scale(.96); }
     b.setAttribute('aria-label', 'ปรับแต่งเสียงและหน้าจอ'); b.textContent = '🎨';
     b.onclick = openSettings; document.body.appendChild(b);
   }
+  window.posShelfPlace = ensureShelfId;
   function ensureShelfId() {
     document.querySelectorAll('button').forEach(x => {
       if (x.textContent.indexOf('แผนผังร้าน') < 0) return;
@@ -9664,7 +9747,115 @@ button:not(:disabled):active { transform: scale(.96); }
   applyTheme();
   document.addEventListener('DOMContentLoaded', () => { ensureSettingsBtn(); ensureShelfId(); });
   if (document.readyState !== 'loading') { ensureSettingsBtn(); ensureShelfId(); }
-  setInterval(ensureShelfId, 1500);
+  window.addEventListener('resize', ensureShelfId);
+})();
+</script>
+
+<!-- ===== v20: เลือกหลายรายการจากตารางสินค้า ลงใบรับของเข้าคลัง ===== -->
+<script>
+(function () {
+  'use strict';
+  const esc = s => (window.escapeHTML ? window.escapeHTML(s) : String(s == null ? '' : s));
+  function allRows() {
+    const out = [];
+    Object.values(db.products || {}).forEach(p => {
+      if (p.isDeleted || p.isDisabled) return;
+      (p.variants || []).forEach(v => out.push({ p, v }));
+    });
+    return out.sort((a, b) => a.p.name.localeCompare(b.p.name, 'th') || (a.v.sizeName || '').localeCompare(b.v.sizeName || '', 'th'));
+  }
+  let rows = [];
+  function ensureModal() {
+    let m = document.getElementById('pos-mrecv'); if (m) return m;
+    m = document.createElement('div'); m.id = 'pos-mrecv';
+    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9997;background:rgba(15,23,42,.6);padding:10px;overflow:auto';
+    m.innerHTML = '<div style="max-width:900px;margin:8px auto;background:#fff;border-radius:16px;padding:14px;font-family:Sarabun,sans-serif;color:#0f172a">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="font-size:16px">📋 เลือกสินค้ารับเข้าคลังหลายรายการ</b><button id="mrv-close" style="border:0;background:#e2e8f0;border-radius:10px;padding:8px 12px;font-weight:700">ปิด</button></div>' +
+      '<input id="mrv-q" placeholder="ค้นหาชื่อ / ขนาด / รหัส / บาร์โค้ด" style="width:100%;box-sizing:border-box;margin:10px 0;padding:10px;border:1px solid #cbd5e1;border-radius:10px;min-height:44px">' +
+      '<div style="overflow:auto;max-height:58vh"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:#f1f5f9;position:sticky;top:0"><th style="padding:6px;text-align:left">สินค้า / ขนาด</th><th>คงเหลือ</th><th>จำนวนรับ</th><th>ราคาทุน</th><th>✓</th></tr></thead><tbody id="mrv-body"></tbody></table></div>' +
+      '<div id="mrv-msg" style="font-size:13px;color:#b91c1c;margin-top:6px"></div>' +
+      '<div style="display:flex;gap:8px;margin-top:10px"><button id="mrv-add" style="flex:1;padding:12px;border-radius:12px;border:0;background:#059669;color:#fff;font-weight:800">✔ เพิ่มที่เลือกเข้าใบรับ</button>' +
+      '<button id="mrv-cancel" style="padding:12px;border-radius:12px;border:0;background:#e2e8f0;font-weight:700">ยกเลิก</button></div></div>';
+    document.body.appendChild(m);
+    const close = () => { m.style.display = 'none'; };
+    document.getElementById('mrv-close').onclick = close;
+    document.getElementById('mrv-cancel').onclick = close;
+    m.addEventListener('click', e => { if (e.target === m) close(); });
+    document.getElementById('mrv-q').oninput = e => render(e.target.value);
+    document.getElementById('mrv-add').onclick = addChecked;
+    return m;
+  }
+  function render(q) {
+    const term = (q || '').trim().toLowerCase();
+    const body = document.getElementById('mrv-body'); body.innerHTML = '';
+    rows.filter(r => !term || (r.p.name + ' ' + (r.v.sizeName || '') + ' ' + (r.v.sku || '') + ' ' + (r.v.barcode || '')).toLowerCase().includes(term))
+      .slice(0, 400).forEach(r => {
+        const tr = document.createElement('tr'); tr.style.borderTop = '1px solid #e2e8f0'; tr.dataset.pid = r.p.id; tr.dataset.vid = r.v.id;
+        tr.innerHTML = '<td style="padding:6px">' + esc(r.p.name) + ((r.p.variants || []).length > 1 ? ' <span style="color:#64748b">(' + esc(r.v.sizeName || 'ปกติ') + ')</span>' : '') + '</td>' +
+          '<td style="text-align:center">' + Number(r.v.stock || 0) + '</td>' +
+          '<td><input class="mrv-qty" type="number" min="0" placeholder="0" style="width:90px;padding:6px;border:1px solid #cbd5e1;border-radius:8px"></td>' +
+          '<td><input class="mrv-cost" type="number" min="0" value="' + Number(r.v.cost || 0) + '" style="width:100px;padding:6px;border:1px solid #cbd5e1;border-radius:8px"></td>' +
+          '<td style="text-align:center"><input class="mrv-chk" type="checkbox" style="width:22px;height:22px"></td>';
+        body.appendChild(tr);
+      });
+  }
+  function addChecked() {
+    const msg = document.getElementById('mrv-msg'); msg.textContent = '';
+    let n = 0;
+    for (const tr of document.querySelectorAll('#mrv-body tr')) {
+      const chk = tr.querySelector('.mrv-chk'); if (!chk || !chk.checked) continue;
+      const qty = parseFloat(tr.querySelector('.mrv-qty').value) || 0;
+      const cost = parseFloat(tr.querySelector('.mrv-cost').value) || 0;
+      if (qty <= 0) { msg.textContent = 'ทุกแถวที่ติ๊กต้องระบุจำนวนรับมากกว่า 0'; return; }
+      const p = db.products[tr.dataset.pid]; const v = p && (p.variants || []).find(x => x.id === tr.dataset.vid);
+      if (!p || !v) continue;
+      const total = (window.roundAmt ? window.roundAmt(qty * cost) : Math.round(qty * cost * 100) / 100);
+      poTempItems.push({ productId: p.id, variantId: v.id, productName: p.name + ((p.variants || []).length > 1 ? ' (' + (v.sizeName || 'ปกติ') + ')' : ''), qty, cost, total });
+      n++;
+    }
+    if (!n) { msg.textContent = 'ยังไม่ได้ติ๊กเลือกรายการ'; return; }
+    window.renderPOCartList?.();
+    document.getElementById('pos-mrecv').style.display = 'none';
+    window.showToast?.('เพิ่ม ' + n + ' รายการเข้าใบรับแล้ว');
+  }
+  window.openMultiReceive = function () {
+    rows = allRows();
+    const m = ensureModal();
+    document.getElementById('mrv-q').value = '';
+    render('');
+    m.style.display = 'block';
+  };
+})();
+</script>
+
+
+<!-- ===== v21: รูปสินค้าในฟอร์ม (เลือกจากคลัง / วางลิงก์) + ลดการทำงานเบื้องหลัง ===== -->
+<script>
+(function () {
+  'use strict';
+  function showPreview(url) {
+    const pv = document.getElementById('pm-photo-preview'), ph = document.getElementById('pm-photo-placeholder');
+    if (url) { pv.src = url; pv.classList.remove('hidden'); ph.classList.add('hidden'); }
+    else { pv.classList.add('hidden'); ph.classList.remove('hidden'); }
+    const em = document.getElementById('pm-image'); if (em && url) em.value = '';
+  }
+  window.pmPickFromGallery = function () {
+    if (!window.posPickImage) return;
+    const fake = { dataset: { img: '' }, querySelector: () => null,
+      onPick: (url) => { pmPhotoDataUrl = url || null; pmPhotoChanged = true; showPreview(url || ''); } };
+    window.posPickImage(fake);
+  };
+  window.pmUseUrl = function () {
+    const v = (document.getElementById('pm-image-url').value || '').trim();
+    if (!/^https?:\/\//i.test(v)) { window.showAlert?.('ลิงก์ไม่ถูกต้อง', 'ลิงก์รูปต้องขึ้นต้นด้วย https://', true); return; }
+    pmPhotoDataUrl = v; pmPhotoChanged = true; showPreview(v);
+  };
+  // รวมตัวเลือกปุ่มแผนผังร้านเมื่อวาดตารางใหม่ (แทนการสแกนทุกวินาที)
+  const origRender = window.renderStockTable;
+  if (typeof origRender === 'function' && !origRender.__v21) {
+    const w = function () { const r = origRender.apply(this, arguments); window.posShelfPlace?.(); return r; };
+    w.__v21 = true; window.renderStockTable = w;
+  }
 })();
 </script>
 
