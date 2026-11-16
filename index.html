@@ -2457,12 +2457,17 @@ window.formatMoney = formatMoney;
             id: toUUID(p.id),
             sku: p.code || p.id,
             name: p.name,
-            image_url: (typeof p.imageUrl === 'string' && /^https?:\/\//i.test(p.imageUrl)) ? p.imageUrl : null,
-            min_stock_alert: roundStock((p.variants && p.variants[0] && p.variants[0].minStock) || 5),
+                  min_stock_alert: roundStock((p.variants && p.variants[0] && p.variants[0].minStock) || 5),
             is_active: !p.isDeleted && !p.isDisabled
           }));
           const _prodD = _H.diff('products', productRows);
           await _H.upsertChunks(client, 'products', _prodD.changed, 'id'); _prodD.commit();
+// รูปสินค้า: เขียนเฉพาะรายการที่มี URL จริง ไม่เขียนทับด้วย NULL
+for (const p of productsList) {
+  if (typeof p.imageUrl === 'string' && /^https?:\/\//i.test(p.imageUrl)) {
+    try { await client.from('products').update({ image_url: p.imageUrl }).eq('id', toUUID(p.id)); } catch (e) { console.warn('image_url update', e); }
+  }
+}
 
           // 3. Product Categories Junction — เฉพาะสินค้าที่เปลี่ยนหมวด
           const nameToId = {};
@@ -5323,7 +5328,7 @@ window.formatMoney = formatMoney;
           const existing=db.products[existingId];
           existing.name=p.name;
           existing.cat=catsByProduct[p.id]||existing.cat;
-          existing.image=p.image_url||existing.image;
+          existing.image=p.image_url||existing.image; if(p.image_url) existing.imageUrl=p.image_url;
           if(p.min_stock_alert!=null)existing.minStock=+p.min_stock_alert;
           matchedProd++;
           if(!_hasPending){   // ให้สต็อกตรงกับเซิร์ฟเวอร์ + เพิ่มตัวเลือก (variant) ที่เครื่องอื่นเพิ่มไว้
@@ -5351,7 +5356,7 @@ window.formatMoney = formatMoney;
             }))
           }));
           db.products[p.id]={
-            id:p.id,name:p.name,code:sku,cat:catsByProduct[p.id]||[],image:p.image_url||'📦',
+            id:p.id,name:p.name,code:sku,cat:catsByProduct[p.id]||[],image:p.image_url||'📦',imageUrl:p.image_url||null,
             minStock:+(p.min_stock_alert||0),
             variants:remoteVariants.length?remoteVariants:[{id:null,sizeName:'ปกติ',barcode:'',cost:0,price:0,stock:0,fractions:[]}]
           };
@@ -9596,7 +9601,16 @@ button:not(:disabled):active { transform: scale(.96); }
     b.onclick = openSettings; document.body.appendChild(b);
   }
   function ensureShelfId() {
-    document.querySelectorAll('button').forEach(x => { if (!x.id && x.textContent.indexOf('แผนผังร้าน') >= 0) x.id = 'pos-shelf-btn'; });
+    document.querySelectorAll('button').forEach(x => {
+      if (x.textContent.indexOf('แผนผังร้าน') < 0) return;
+      if (!x.id) x.id = 'pos-shelf-btn';
+      // จัดตำแหน่งตรงๆ ให้อยู่เหนือแถบเมนู ไม่ทับปุ่มอื่น
+      x.style.setProperty('position', 'fixed', 'important');
+      x.style.setProperty('right', '12px', 'important');
+      x.style.setProperty('bottom', '140px', 'important');
+      x.style.setProperty('left', 'auto', 'important');
+      x.style.setProperty('z-index', '9990', 'important');
+    });
   }
 
   function ensureModal() {
