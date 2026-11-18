@@ -2,23 +2,13 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8">
-    <title>Smart POS Pro V9.63 - Hardware Single-Shop Edition</title>
+    <title>Smart POS Pro V1.0 - Hardware Single-Shop Edition</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" type="image/svg+xml" href="./icon.svg">
-    <style id="offline-readiness-style">
-      #offline-readiness-banner{position:sticky;top:0;z-index:25000;display:flex;align-items:center;justify-content:center;gap:5px;height:18px;padding:0 10px;overflow:hidden;white-space:nowrap;background:#dcfce7;color:#166534;font:700 10px/18px system-ui,sans-serif;border-bottom:1px solid #bbf7d0}
-       header.sticky{top:19px!important}   /* หัวหน้าจอติดอยู่ใต้แถบสถานะ ไม่ถูกแถบทับตอนเลื่อน */
-       #offline-readiness-banner #offline-status-label{overflow:hidden;text-overflow:ellipsis}
-      #offline-readiness-banner[data-state="offline"]{background:#fef3c7;color:#92400e;border-color:#fde68a}
-      #offline-readiness-banner[data-state="error"]{background:#fee2e2;color:#991b1b;border-color:#fecaca}
-      #offline-readiness-banner .offline-detail{display:none}
-      @media print{#offline-readiness-banner{display:none!important}}
-    </style>
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script>
       (function () {
@@ -143,7 +133,6 @@ img, video { max-width: 100%; height: auto; }
 .border-indigo-300 { border-color: #a5b4fc; }
 .border-indigo-50 { border-color: #eef2ff; }
 .border-indigo-600 { border-color: #4f46e5; }
-.border-l { border-left-width: 1px; }
 .border-r { border-right-width: 1px; }
 .border-rose-100 { border-color: #ffe4e6; }
 .border-rose-200 { border-color: #fecdd3; }
@@ -164,8 +153,6 @@ img, video { max-width: 100%; height: auto; }
 .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: #f1f5f9; }
 .divide-y { --tw-divide-y-reverse: 0; border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse))); border-bottom-width: calc(1px * var(--tw-divide-y-reverse)); }
 .duration-300 { transition-duration: 300ms; }
-.ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-.ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
 .even\:bg-slate-50\/60:nth-child(even) { background-color: rgb(248 250 252 / 0.6); }
 .fixed { position: fixed; }
 .flex { display: flex; }
@@ -270,7 +257,6 @@ img, video { max-width: 100%; height: auto; }
 @media (min-width:1024px) { .lg\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-.list-decimal { list-style-type: decimal; }
 .max-h-40 { max-height: 10rem; }
 .max-h-48 { max-height: 12rem; }
 .max-h-52 { max-height: 13rem; }
@@ -347,8 +333,6 @@ img, video { max-width: 100%; height: auto; }
 .pb-3 { padding-bottom: 0.75rem; }
 .pl-1\.5 { padding-left: 0.375rem; }
 .pl-11 { padding-left: 2.75rem; }
-.pl-3 { padding-left: 0.75rem; }
-.pl-4 { padding-left: 1rem; }
 .pointer-events-none { pointer-events: none; }
 .pr-1 { padding-right: 0.25rem; }
 .pr-2 { padding-right: 0.5rem; }
@@ -526,10 +510,6 @@ img, video { max-width: 100%; height: auto; }
 .z-\[9999\] { z-index: 9999; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <style>
       body { 
         font-family: 'Sarabun', sans-serif; 
@@ -560,8 +540,6 @@ img, video { max-width: 100%; height: auto; }
       .cart-total-glow { animation: cartTotalGlow 0.4s ease-out; }
       @keyframes cartTotalGlow { 0% { color: #4f46e5; } 50% { color: #6366f1; transform: scale(1.04); } 100% { color: #4f46e5; transform: scale(1); } }
 
-      .p-card { transition: all 0.2s; border: 2px solid transparent; cursor: pointer; border-radius: 1.5rem; overflow: hidden; }
-      .p-card:active { border-color: #6366f1; background: #f8fafc; }
 
       .receipt-font { font-family: 'Sarabun', sans-serif; line-height: 1.4; }
       #loading-overlay { background: rgba(15, 23, 42, 0.9); z-index: 10000; }
@@ -607,41 +585,91 @@ img, video { max-width: 100%; height: auto; }
         .no-print { display: none !important; }
       }
     </style>
-      <style id="header-icons-style">
-      .hdr{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
-      .hdr-brand{order:1;flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:10px}
-      .hdr-clock{order:2;flex:0 0 auto}
-      .hdr-actions{order:3;flex:1 1 100%;display:flex;align-items:center;justify-content:space-between;gap:6px}
-      @media(min-width:640px){
-        .hdr-actions{order:2;flex:0 0 auto;margin-left:auto;justify-content:flex-end;gap:8px}
-        .hdr-clock{order:3}
-      }
-      .hb{position:relative;width:42px;height:42px;flex:0 0 42px;border-radius:12px;border:1px solid #e2e8f0;background:#f1f5f9;color:#334155;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .08s}
+    <style id="ui-theme">
+      /* ===== ธีมและเลย์เอาต์หน้าจอ (ไฟล์ส่วนตกแต่งอยู่ที่นี่ที่เดียว — แก้หน้าตาโดยไม่แตะโค้ตระบบ) ===== */
+      :root{--ui-primary:#4f46e5;--ui-ink:#0f172a;--ui-muted:#64748b;--ui-line:rgba(148,163,184,.28);--ui-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.08)}
+
+      /* แถบหัว */
+      header.hdr{position:sticky;top:0!important;z-index:40;display:flex;align-items:center;gap:12px;padding:10px 16px;
+        background:rgba(255,255,255,.85);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);
+        border-bottom:1px solid var(--ui-line);box-shadow:none}
+      .hdr-brand{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:10px}
+      .hdr-logo{flex:0 0 auto;width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#6366f1,#4338ca);color:#fff;
+        display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;box-shadow:0 4px 12px rgba(79,70,229,.35)}
+      .hdr-title{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;gap:5px}
+      .hdr-title h2{margin:0;font-size:15px;font-weight:800;color:var(--ui-ink);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+      .hdr-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0;max-width:100%}
+      .hdr-actions{flex:0 0 auto;display:flex;align-items:center;gap:8px}
+
+      /* ป้ายสถานะ (chip) — สถานะเครือข่าย/คิวซิงค์/เซิร์ฟเวอร์รวมเป็นป้ายเดียว */
+      .chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;border:1px solid transparent;
+        font:800 11px/1 Sarabun,system-ui,sans-serif;white-space:nowrap;max-width:100%;min-width:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+      .chip #offline-status-label,.chip #shift-status-label{overflow:hidden;text-overflow:ellipsis}
+      .chip:active{transform:scale(.96)}
+      .chip #offline-status-icon{font-size:8px}
+      #offline-readiness-banner{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+      #offline-readiness-banner[data-state="offline"]{background:#fffbeb;color:#b45309;border-color:#fde68a}
+      #offline-readiness-banner[data-state="error"]{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
+      #offline-readiness-banner .offline-detail{display:none}
+      #shift-status-btn[data-state="open"]{background:#eef2ff;color:#4338ca;border-color:#c7d2fe}
+      #shift-status-btn[data-state="closed"]{background:#f1f5f9;color:#475569;border-color:#e2e8f0}
+      #sync-queue-badge{position:static;white-space:nowrap;font-size:11px;font-weight:800;line-height:1;padding:6px 10px;border-radius:999px}
+      #sync-queue-badge.hidden{display:none}
+
+      /* ปุ่มไอคอนหัวหน้าจอ */
+      .hb{position:relative;width:44px;height:44px;flex:0 0 44px;border-radius:14px;border:1px solid var(--ui-line);background:#fff;color:#334155;
+        display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;padding:0;cursor:pointer;box-shadow:0 1px 2px rgba(15,23,42,.06);
+        -webkit-tap-highlight-color:transparent;transition:transform .12s ease}
       .hb:active{transform:scale(.93)}
-      .hb.hb-primary{background:#4f46e5;border-color:#4f46e5;color:#fff;box-shadow:0 3px 10px rgba(79,70,229,.35)}
-      .hb[data-state="open"]{background:#ecfdf5;border-color:#a7f3d0}
-      .hb[data-state="closed"]{background:#fffbeb;border-color:#fde68a}
-      .hb-hide{display:none!important}
-      .hb-lock{display:none}
-      @media(min-width:640px){.hb-lock{display:flex}}
-      .hb-n{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:99px;background:#f43f5e;color:#fff;font:900 10px/1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-sizing:content-box}
+      .hb.hb-primary{background:linear-gradient(135deg,#6366f1,#4338ca);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(79,70,229,.38)}
+      .hb-n{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:99px;background:#f43f5e;color:#fff;
+        font:900 10px/1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
       #held-bills-count{background:#f59e0b}
       .hb-n.hidden{display:none}
-      .hb-wrap{position:relative;flex:0 0 42px;width:42px;height:42px}
-      #sync-queue-badge{position:absolute;top:-8px;right:-8px;white-space:nowrap;font-size:9px;line-height:1;padding:3px 6px;border-radius:99px;z-index:2}
-      #sync-queue-badge.hidden{display:none}
-      #hb-tip{position:fixed;left:0;top:0;z-index:26000;background:#0f172a;color:#fff;font:700 12px/1.35 system-ui,sans-serif;padding:7px 11px;border-radius:10px;max-width:min(300px,90vw);pointer-events:none;opacity:0;transform:translateY(-3px);transition:opacity .12s,transform .12s;box-shadow:0 6px 22px rgba(0,0,0,.3)}
-      #hb-tip.on{opacity:1;transform:none}
-      @media print{.hdr-actions,#hb-tip{display:none!important}}
+
+      /* ช่องค้นหา + ปุ่มกล้อง */
+      .search-cam{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:12px;background:#eef2ff;
+        font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+      .search-cam:active{transform:translateY(-50%) scale(.93)}
+
+      /* ตัวเลือกมุมมอง */
+      .view-opts{position:relative}
+      .view-opts summary{list-style:none;cursor:pointer;font:700 11px Sarabun,system-ui,sans-serif;color:#475569;background:#fff;border:1px solid var(--ui-line);border-radius:10px;padding:5px 10px}
+      .view-opts summary::-webkit-details-marker{display:none}
+      .view-opts-pop{position:absolute;right:0;top:calc(100% + 6px);z-index:35;display:flex;flex-direction:column;gap:8px;padding:12px;background:#fff;border:1px solid var(--ui-line);border-radius:14px;box-shadow:var(--ui-shadow)}
+
+      /* แถบเมนูล่าง */
+      nav.fixed.bottom-0{border-top:1px solid var(--ui-line);padding-bottom:env(safe-area-inset-bottom)}
+      .nav-btn-el{position:relative;gap:2px}
+      .nav-btn-el > span:first-child{padding:3px 18px;border-radius:999px;transition:background .15s ease}
+      .nav-btn-el.opacity-100 > span:first-child{background:#e0e7ff}
+      .nav-btn-el.opacity-100 > span:last-child{color:#4338ca}
+
+      /* ศูนย์เครื่องมือ (แผ่นเมนูด้านล่าง) */
+      #pos-hub{position:fixed;inset:0;z-index:30000;display:none}
+      #pos-hub.open{display:block}
+      .hub-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+      .hub-sheet{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,600px);max-height:88vh;overflow-y:auto;background:#f8fafc;
+        border-radius:26px 26px 0 0;padding:8px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(15,23,42,.25);animation:hubUp .22s ease}
+      @keyframes hubUp{from{transform:translate(-50%,24px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+      .hub-grip{width:44px;height:5px;border-radius:99px;background:#cbd5e1;margin:2px auto 12px;cursor:pointer}
+      .hub-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+      .hub-store{font:800 18px Sarabun,system-ui,sans-serif;color:var(--ui-ink)}
+      .hub-user{font:700 12px Sarabun,system-ui,sans-serif;color:var(--ui-muted)}
+      .hub-clock{font:800 14px system-ui,sans-serif;color:#475569;font-variant-numeric:tabular-nums}
+      .hub-title{margin:16px 0 8px;font:800 12px Sarabun,system-ui,sans-serif;letter-spacing:.04em;color:var(--ui-muted)}
+      .hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .hub-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px;padding:12px 6px;border-radius:18px;
+        background:#fff;border:1px solid var(--ui-line);box-shadow:0 1px 2px rgba(15,23,42,.05);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
+      .hub-tile:active{transform:scale(.96)}
+      .hub-ico{font-size:28px;line-height:1}
+      .hub-lbl{font:800 12px/1.25 Sarabun,system-ui,sans-serif;color:var(--ui-ink);text-align:center}
+      .hub-hint{font:600 10px/1.2 Sarabun,system-ui,sans-serif;color:var(--ui-muted);text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      @media print{header.hdr,#pos-hub{display:none!important}}
+
     </style>
   </head>
   <body class="bg-slate-50 text-slate-900 min-h-screen">
-  <div id="offline-readiness-banner" role="status" aria-live="polite" data-state="online">
-    <span id="offline-status-icon">●</span>
-    <span id="offline-status-label">โหมดพร้อมใช้งาน</span>
-    <span id="offline-status-detail" class="offline-detail">ข้อมูลขายจะบันทึกในเครื่องและรอซิงก์เมื่อมีอินเทอร์เน็ต</span>
-  </div>
-
     <!-- STARTUP SPLASH -->
     <div id="sync-splash-screen" style="position:fixed;inset:0;z-index:99999;background:#4f46e5;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:'Sarabun',sans-serif;">
       <div style="width:48px;height:48px;border:4px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:sync-spin 0.8s linear infinite;"></div>
@@ -728,28 +756,26 @@ img, video { max-width: 100%; height: auto; }
     </div>
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm hdr">
+    <header class="sticky top-0 z-40 hdr">
       <div class="hdr-brand">
-        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-md">P</div>
-        <div class="flex flex-col" style="min-width:0">
-          <h2 id="store-name-title" class="font-bold text-slate-800 text-base truncate max-w-[160px]">Smart POS</h2>
-          <span id="supabase-sync-badge" class="text-[9px] text-indigo-500 font-bold">🟢 เชื่อมต่อ Supabase SQL</span>
+        <div class="hdr-logo">P</div>
+        <div class="hdr-title">
+          <h2 id="store-name-title">Smart POS</h2>
+          <div class="hdr-chips">
+            <button type="button" id="offline-readiness-banner" class="chip" role="status" aria-live="polite" data-state="online" onclick="window.forceSyncNow&&window.forceSyncNow()" title="แตะเพื่อซิงค์ข้อมูล">
+              <span id="offline-status-icon">●</span><span id="offline-status-label">พร้อมใช้งาน</span><span id="offline-status-detail" class="offline-detail"></span>
+            </button>
+            <button type="button" class="chip" data-state="closed" id="shift-status-btn" onclick="window.openShiftModal()" aria-label="เปิด/ปิดกะ">
+              <span id="shift-status-icon">🗄️</span><span id="shift-status-label">ยังไม่เปิดร้าน</span>
+            </button>
+            <span id="sync-queue-badge" class="hidden cursor-pointer"></span>
+          </div>
         </div>
       </div>
-      <div class="hdr-clock text-right">
-        <div id="clock" class="font-bold text-slate-700 text-xs tabular-nums">00:00:00</div>
-        <div class="text-[8px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-black mt-0.5">READY</div>
-      </div>
       <div class="hdr-actions">
-        <button type="button" class="hb" data-hb="settings" onclick="window.openMasterSettingsModal()" aria-label="ศูนย์การตั้งค่า">⚙️</button>
-        <button type="button" class="hb" data-hb="shift" data-state="closed" id="shift-status-btn" onclick="window.openShiftModal()" aria-label="เปิด/ปิดกะ">
-          <span id="shift-status-icon">🗄️</span><span id="shift-status-label" class="hb-hide">ยังไม่เปิดร้าน</span>
-        </button>
-        <button type="button" class="hb hb-lock" data-hb="lock" onclick="window.lockPOS()" aria-label="ล็อก/สลับผู้ใช้">🔒<span id="active-user-badge" class="hb-hide"></span></button>
-        <button type="button" class="hb" data-hb="hold" id="held-bills-btn" onclick="window.openHeldBillsModal()" aria-label="พักบิล">📋<span id="held-bills-count" class="hb-n hidden">0</span></button>
-        <button type="button" class="hb hb-primary" data-hb="cart" id="header-cart-btn" onclick="window.openCartModal()" aria-label="ตะกร้า">🛒<span id="header-cart-count" class="hb-n" style="display:none">0</span></button>
-        <span class="hb-wrap"><button type="button" class="hb" data-hb="sync" onclick="window.forceSyncNow()" aria-label="ซิงค์ข้อมูล">🔄</button><span id="sync-queue-badge" class="hidden cursor-pointer"></span></span>
-        <button type="button" class="hb" data-hb="scan" onclick="window.startCameraScan()" aria-label="สแกนบาร์โค้ดด้วยกล้อง">📸</button>
+        <button type="button" class="hb" id="held-bills-btn" onclick="window.openHeldBillsModal()" aria-label="พักบิล">📋<span id="held-bills-count" class="hb-n hidden">0</span></button>
+        <button type="button" class="hb hb-primary" id="header-cart-btn" onclick="window.openCartModal()" aria-label="ตะกร้า">🛒<span id="header-cart-count" class="hb-n" style="display:none">0</span></button>
+        <button type="button" class="hb" id="hub-open-btn" onclick="window.posHub.open()" aria-label="เมนูเครื่องมือ">☰</button>
       </div>
     </header>
 
@@ -758,8 +784,9 @@ img, video { max-width: 100%; height: auto; }
       <!-- VIEW 1: SALE WORKSPACE -->
       <section id="view-sale" class="view-content block fade-in">
         <div class="mb-3 relative">
-          <input type="text" id="search-product" oninput="window.onSearchInput(event)" placeholder="สแกนบาร์โค้ด หรือพิมพ์ชื่อ/SKU..." class="w-full bg-white border-2 border-slate-200 rounded-2xl py-3.5 pl-11 pr-4 outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm font-bold text-sm text-slate-800">
+          <input type="text" id="search-product" oninput="window.onSearchInput(event)" placeholder="สแกนบาร์โค้ด หรือพิมพ์ชื่อ/SKU..." class="w-full bg-white border-2 border-slate-200 rounded-2xl py-3.5 pl-11 pr-14 outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm font-bold text-sm text-slate-800">
           <span class="absolute left-4 top-3.5 text-lg opacity-30">🔍</span>
+          <button type="button" class="search-cam" onclick="window.startCameraScan()" aria-label="สแกนบาร์โค้ดด้วยกล้อง">📷</button>
         </div>
 
         <!-- Category bar: locked to the top (sticky, right below the header) so it stays
@@ -791,6 +818,7 @@ img, video { max-width: 100%; height: auto; }
                   <input type="checkbox" id="hide-out-of-stock" onchange="window.renderProductGridPage()" class="w-4 h-4 rounded accent-indigo-600">
                   ซ่อนสินค้าหมด
                 </label>
+<details class="view-opts"><summary aria-label="ตัวเลือกมุมมอง">⚙ มุมมอง</summary><div class="view-opts-pop">
                 <select id="product-page-size-select" onchange="window.changeProductsPerPage(this.value)" title="จำนวนสินค้าต่อหน้า" class="text-[10px] font-bold border rounded-lg py-1 pl-1.5 pr-5 bg-white outline-none">
                   <option value="12">12/หน้า</option>
                   <option value="24" selected>24/หน้า</option>
@@ -803,6 +831,7 @@ img, video { max-width: 100%; height: auto; }
                   <option value="4" selected>4 คอลัมน์</option>
                   <option value="6">6 คอลัมน์</option>
                 </select>
+                </div></details>
                 <div class="flex items-center gap-1.5">
                   <button onclick="window.gotoProductPage(-1)" class="w-8 h-8 rounded-full bg-white border shadow-sm flex items-center justify-center text-slate-500 font-bold btn-touch">‹</button>
                   <span id="product-page-indicator" class="text-[11px] font-bold text-slate-400 min-w-[64px] text-center">หน้า 1/1</span>
@@ -1729,26 +1758,98 @@ img, video { max-width: 100%; height: auto; }
 
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+<script id="ui-hub">
+/* ===== ศูนย์เครื่องมือ (UI) =====
+   จุดเดียวที่รวมปุ่มเครื่องมือทั้งหมด แบ่ง 3 กลุ่ม: การทำงานหน้าร้าน / ระบบ / การแสดงผล
+   โมดูลอื่นเพิ่มปุ่มได้ด้วย posHub.register({ id, group, icon, label, hint, run, visible, keepOpen })
+   ไม่มีปุ่มลอยกระจายบนหน้าจออีกต่อไป */
+(function () {
+  'use strict';
+  const GROUPS = [
+    { id: 'ops', title: 'การทำงานหน้าร้าน' },
+    { id: 'system', title: 'ระบบ' },
+    { id: 'look', title: 'การแสดงผล' }
+  ];
+  const items = [];
+  let root = null;
+  const val = v => (typeof v === 'function' ? v() : v);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function ensure() {
+    if (root) return root;
+    root = document.createElement('div');
+    root.id = 'pos-hub';
+    root.setAttribute('role', 'dialog');
+    root.setAttribute('aria-modal', 'true');
+    root.setAttribute('aria-label', 'เมนูเครื่องมือ');
+    root.innerHTML =
+      '<div class="hub-backdrop" data-hub-close></div>' +
+      '<section class="hub-sheet">' +
+        '<div class="hub-grip" data-hub-close></div>' +
+        '<div class="hub-head"><div><div class="hub-store" id="hub-store"></div><div class="hub-user" id="hub-user"></div></div>' +
+        '<div class="hub-clock" id="clock">00:00:00</div></div>' +
+        '<div class="hub-body" id="hub-body"></div>' +
+      '</section>';
+    root.addEventListener('click', e => {
+      if (e.target.closest('[data-hub-close]')) return close();
+      const tile = e.target.closest('[data-hub-item]');
+      if (!tile) return;
+      const it = items.find(x => x.id === tile.dataset.hubItem);
+      if (!it) return;
+      if (!it.keepOpen) close();
+      try { it.run(); } catch (err) { console.warn('hub item', it.id, err); }
+      if (it.keepOpen) render();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    document.body.appendChild(root);
+    return root;
+  }
+
+  function render() {
+    ensure();
+    const title = document.getElementById('store-name-title');
+    const user = window.db && window.db.activeUser;
+    document.getElementById('hub-store').textContent = (title && title.textContent) || 'Smart POS';
+    document.getElementById('hub-user').textContent = user ? '👤 ' + user.name : '';
+    document.getElementById('hub-body').innerHTML = GROUPS.map(g => {
+      const list = items.filter(it => it.group === g.id && (!it.visible || it.visible()));
+      if (!list.length) return '';
+      return '<h3 class="hub-title">' + g.title + '</h3><div class="hub-grid">' + list.map(it =>
+        '<button type="button" class="hub-tile" data-hub-item="' + esc(it.id) + '">' +
+          '<span class="hub-ico">' + esc(val(it.icon)) + '</span>' +
+          '<span class="hub-lbl">' + esc(it.label) + '</span>' +
+          (it.hint ? '<span class="hub-hint">' + esc(val(it.hint)) + '</span>' : '') +
+        '</button>').join('') + '</div>';
+    }).join('');
+  }
+
+  function open() { render(); root.classList.add('open'); }
+  function close() { if (root) root.classList.remove('open'); }
+
+  window.posHub = {
+    register(it) {
+      const i = items.findIndex(x => x.id === it.id);
+      if (i >= 0) items[i] = it; else items.push(it);
+    },
+    open, close
+  };
+
+  // เครื่องมือหลักที่ย้ายมาจากแถบหัวหน้าจอ
+  const textOf = id => { const e = document.getElementById(id); return e ? String(e.textContent || '').trim() : ''; };
+  window.posHub.register({ id: 'sync', group: 'ops', icon: '🔄', label: 'ซิงค์ข้อมูลตอนนี้',
+    hint: () => textOf('offline-status-label'), run: () => window.forceSyncNow && window.forceSyncNow() });
+  window.posHub.register({ id: 'lock', group: 'ops', icon: '🔒', label: 'ล็อก / สลับพนักงาน',
+    hint: () => (window.db && window.db.activeUser ? window.db.activeUser.name : ''), run: () => window.lockPOS && window.lockPOS() });
+  window.posHub.register({ id: 'settings', group: 'system', icon: '⚙️', label: 'ศูนย์การตั้งค่า',
+    hint: 'ร้านค้า • ฐานข้อมูล', run: () => window.openMasterSettingsModal && window.openMasterSettingsModal() });
+})();
+
+</script>
 
     <script>
       // ==========================================
       // MASTER APPLICATION LOGIC & STATE
       // ==========================================
-      // BUG FIX (money-rounding, application-wide): every monetary calculation in this file
-      // (cart subtotal/discount/tax/grand total, change, refunds, reports, cloud sync — 49
-      // call sites) already funnels through this one function as its final rounding step, so
-      // fixing the rounding math itself closes the whole floating-point-rounding defect class
-      // at once, without migrating every stored/calculated value to a different unit (integer
-      // cents) — a much larger, riskier change touching the SQL schema and every sync path too.
-      // The OLD `Math.round(num*100)/100` has a textbook float-precision bug: the intermediate
-      // multiplication can itself already be wrong in binary floating point — e.g. in real
-      // JS, `1.005*100 === 100.49999999999999`, not 100.5 — so Math.round then silently rounds
-      // the wrong way for specific values (1.005 rounded to 1.00 instead of 1.01). Shifting the
-      // decimal point via a string exponent (`+'e2'` / `+'e-2'`) instead routes through JS's own
-      // exact decimal-string-to-number parsing rather than a binary multiply, which avoids that
-      // intermediate error entirely — this is the standard, well-established fix for this exact
-      // class of bug. Verified against known problem values (1.005, 1.015, 1.025, 0.145, etc.)
-      // before applying.
       const roundAmt = (num) => {
         const n = parseFloat(num) || 0;
         return Number(Math.round(Number(n + 'e2')) + 'e-2');
@@ -1759,6 +1860,40 @@ img, video { max-width: 100%; height: auto; }
       };
       const formatMoney = (val) => "฿" + roundAmt(val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 window.formatMoney = formatMoney;
+
+      // จุดเชื่อมกลางของระบบ: ฟังก์ชันหลักประกาศเหตุการณ์ (emit) ส่วนเสียง/แผนผังชั้นวาง/ปุ่มเสริมรับฟัง (on)
+      // แทนการห่อฟังก์ชันซ้อนกันหลายชั้น
+      // โหลดไลบรารีหนักเฉพาะตอนกดใช้ (สแกนบาร์โค้ด / นำเข้า-ส่งออก Excel / ZIP) แทนการโหลดตอนเปิดแอป
+      window.posLoadLib = (function () {
+        const LIBS = {
+          qrcode:  { g: 'Html5Qrcode', src: 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js' },
+          xlsx:    { g: 'XLSX',        src: 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js' },
+          jszip:   { g: 'JSZip',       src: 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js' },
+          exceljs: { g: 'ExcelJS',     src: 'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js' }
+        };
+        const pending = {};
+        return function (name) {
+          const lib = LIBS[name];
+          if (!lib) return Promise.reject(new Error('ไม่รู้จักไลบรารี ' + name));
+          if (window[lib.g]) return Promise.resolve(true);
+          if (pending[name]) return pending[name];
+          return pending[name] = new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = lib.src;
+            s.onload = () => resolve(true);
+            s.onerror = () => { delete pending[name]; s.remove(); reject(new Error('โหลดไลบรารี ' + lib.g + ' ไม่สำเร็จ — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต')); };
+            document.head.appendChild(s);
+          });
+        };
+      })();
+
+      window.posHooks = (function () {
+        const subs = {};
+        return {
+          on(name, fn) { (subs[name] = subs[name] || []).push(fn); },
+          emit(name, arg) { (subs[name] || []).slice().forEach(fn => { try { fn(arg); } catch (e) { console.warn('hook ' + name, e); } }); }
+        };
+      })();
 
       // SHA-256 hash for employee PINs — PINs must never be stored or synced as plaintext.
       window.hashPin = async function(pin) {
@@ -1789,14 +1924,6 @@ window.formatMoney = formatMoney;
         return h >>> 0;
       }
 
-      // BUG FIX: เวอร์ชันเดิมปั้น UUID 128 บิตจาก hash 32 บิตตัวเดียวแล้ว XOR กับค่าคงที่ 3 ค่า
-      // — เอนโทรปีจริงมีแค่ 32 บิต ไม่ใช่ 128 บิต ทำให้โอกาสสองรหัสในเครื่อง (สินค้า/บิล/ลูกค้า ฯลฯ)
-      // แปลงแล้วชนกันเริ่มมีนัยสำคัญตั้งแต่ประมาณ 65,000 รายการ (birthday paradox) และ upsert
-      // ฝั่ง Supabase จะ "เขียนทับ" เรคคอร์ดที่ชนกันแบบเงียบๆ โดยไม่มี error ให้เห็นเลย
-      // เวอร์ชันนี้รัน FNV-1a 4 รอบด้วย seed และ salt ต่างกันในแต่ละรอบ ให้ได้เอนโทรปีอิสระ
-      // ครบทั้ง 128 บิตจริง โดยยังคง sync และ deterministic เหมือนเดิม (string เดิมแปลงแล้วได้
-      // uuid เดิมเสมอ ซึ่งจำเป็นสำหรับ upsert ให้ตรงแถวเดิมทุกครั้งที่ sync ซ้ำ) — ไม่ต้องแก้จุดที่
-      // เรียกใช้ toUUID() เลยสักจุดเดียว
       function toUUID(str) {
         if (!str) return null;
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -1944,11 +2071,6 @@ window.formatMoney = formatMoney;
           } else if (entries.length > 30) {
             skippedNoUpload++; continue;   // รูปจำนวนมากเก็บเป็น base64 ในเครื่องไม่ได้ (เกินโควตา 5MB ทำให้ข้อมูลหาย) ต้องอัปโหลดขึ้น Supabase เท่านั้น
           } else {
-            // BUG FIX: เดิม fallback เป็น URL.createObjectURL(file) ซึ่งเป็น blob: URL ที่ใช้ได้
-            // แค่ในแท็บ/เซสชันปัจจุบันเท่านั้น — พอ persist() ลง localStorage แล้วรีเฟรชหน้าเว็บ
-            // URL นี้จะใช้ไม่ได้ทันที รูปหายทุกครั้ง (ไม่สอดคล้องกับจุดถ่ายรูปสินค้าทีละชิ้นที่ใช้
-            // base64 data URL เป็น fallback แทน ซึ่งอยู่ข้ามการรีเฟรชได้ปกติ) เปลี่ยนมาใช้
-            // FileReader.readAsDataURL() แบบเดียวกันให้สอดคล้องกัน รูปจะไม่หายหลัง reload อีกต่อไป
             p.imageUrl = await new Promise((resolve) => {
               const reader = new FileReader();
               reader.onload = () => resolve(reader.result);
@@ -2075,10 +2197,6 @@ window.formatMoney = formatMoney;
 
       // Employee management now lives inline in the Settings > USERS tab (see switchSettingsTab)
       // instead of a separate floating modal, matching the other management panels.
-      // NOTE: window.renderUserManagerList / window.saveUser / window.deleteUser are defined
-      // later in the "Enterprise Management Repair Layer" script (with role support and
-      // hashed PINs via window.hashPin) — that is the active implementation actually used
-      // by the Settings > USERS tab.
 
       window.saveSupplier = function() {
         const name = document.getElementById('supplier-name-input').value.trim();
@@ -2126,10 +2244,8 @@ window.formatMoney = formatMoney;
       };
 
       window.updateSupabaseBadge = function(isSynced) {
-        const badge = document.getElementById('supabase-sync-badge');
-        if (badge) {
-          badge.innerText = isSynced ? "🟢 เชื่อมต่อ Supabase SQL" : "🔴 ขัดแย้ง/ออฟไลน์";
-        }
+        window.posCloudOk = !!isSynced;
+        window.smartPOSOfflineStatus?.refresh();
       };
 
       window.saveSupabaseConfig = function() {
@@ -2547,8 +2663,8 @@ for (const p of productsList) {
                 price: roundAmt(v.price),
                 cost_price: roundAmt(v.cost),
                 min_stock: roundStock(v.minStock != null ? v.minStock : 5),   // ขั้นต่ำเป็นของแต่ละขนาด
-                // (v10) ไม่ส่ง stock_quantity ในการ upsert — สต็อกเปลี่ยนผ่าน RPC เท่านั้น (create_sale / process_return / receive_goods / adjust_stock / seed)
-                location_code: v.locationCode || null,   // ตำแหน่งชั้นวาง (v11)
+                // ไม่ส่ง stock_quantity ในการ upsert — สต็อกเปลี่ยนผ่าน RPC เท่านั้น (create_sale / process_return / receive_goods / adjust_stock / seed)
+                location_code: v.locationCode || null,   // ตำแหน่งชั้นวาง 
                 is_active: !p.isDeleted && !p.isDisabled
               });
               _variantOwner.push([p, v]);
@@ -2679,6 +2795,7 @@ for (const [pp, vv] of _variantOwner) {
 
       let _prodSyncPromise = null;   // กันซิงค์สินค้าซ้อนกัน (บันทึกสินค้า + คิวซิงค์ + ปุ่มซิงค์)
       window.syncProductsToSupabase = function(isQuiet) {
+        window.posHooks.emit('sync:products');
         if (_prodSyncPromise) return _prodSyncPromise;
         _prodSyncPromise = window._syncProductsImpl(isQuiet).finally(() => { _prodSyncPromise = null; });
         return _prodSyncPromise;
@@ -2703,7 +2820,7 @@ for (const [pp, vv] of _variantOwner) {
           const _shiftD = _H.diff('shifts', shiftRows);
           await _H.upsertChunks(client, 'shifts', _shiftD.changed, 'id'); _shiftD.commit();
 
-          // 2. Bills — (v10) ไม่เขียนบิลตรงเข้าตารางอีกต่อไป: บิลทั้งหมดไปทาง create_sale (คิวซิงค์) เท่านั้น
+          // 2. Bills — ไม่เขียนบิลตรงเข้าตารางอีกต่อไป: บิลทั้งหมดไปทาง create_sale (คิวซิงค์) เท่านั้น
           //    เพื่อให้เซิร์ฟเวอร์ตรวจสต็อก/วงเงิน/ส่วนลดเสมอ ไม่มี fallback ที่ข้ามกฎได้
 
           // 3. Cash Ledger — real cash-drawer movements only (AR payments received, cash
@@ -2788,12 +2905,8 @@ for (const [pp, vv] of _variantOwner) {
         if (overlay) overlay.classList.remove('hidden');
 
         try {
-          // BUG FIX: เดิมไม่เช็คค่าที่ return กลับมาเลย ต่อให้ syncProductsToSupabase/
-          // syncTransactionsToSupabase ล้มเหลวจริง (เช่นโดน RLS บล็อกเพราะยังไม่ได้ล็อกอิน) ก็ยัง
-          // ขึ้นโทสต์ "ซิงค์สำเร็จ" หลอกอยู่ดี ทำให้ไม่มีทางรู้เลยว่าทำไมตารางบน Supabase ว่างเปล่า
-          // เรียกซ้ำแบบไม่ quiet (isQuiet=false) เฉพาะตัวที่ล้มเหลว เพื่อให้ error จริงเด้งให้เห็น
           const _ver = await window.checkServerSchema();
-          if (_ver !== null && _ver < 2) throw new Error('ฐานข้อมูลบนเซิร์ฟเวอร์ยังเป็นเวอร์ชันเก่า — ต้องรัน supabase/migrations/0002_fixes.sql ก่อน');
+          if (_ver !== null && _ver < 2) throw new Error('ฐานข้อมูลบนเซิร์ฟเวอร์ยังเป็นเวอร์ชันเก่า — ต้องรัน SMART-POS-FULL-v13.sql ก่อน');
           window.retryFailedSyncOps();   // กดซิงค์เองถือว่าสั่งลองส่งรายการที่เคยล้มเหลวใหม่
           const res1 = await window.syncProductsToSupabase(true);
           const res2 = await window.syncTransactionsToSupabase(true);
@@ -2854,6 +2967,7 @@ for (const [pp, vv] of _variantOwner) {
         window.updateCartUI();
         window.showToast("เพิ่มลงตะกร้าเรียบร้อย");
         if (evt) window._flyNameToCart?.(evt, p.name);
+        window.posHooks.emit('cart:add', { productId, variantId, fractionId });
       };
 
       // ชื่อสินค้าที่กดหยิบ "วิ่ง" ไปที่ไอคอนตะกร้าที่หัวจอ — ฟีดแบ็กภาพให้รู้ทันทีว่าหยิบสำเร็จ
@@ -3059,10 +3173,6 @@ for (const [pp, vv] of _variantOwner) {
       window.changeProductGridCols = function(val) {
         const cols = Math.max(1, parseInt(val) || 4);
         const grid = document.getElementById('product-grid');
-        // BUG FIX: เดิม Math.min(cols, 2) ล็อกจำนวนคอลัมน์พื้นฐาน (มือถือ/จอแคบกว่า md=768px)
-        // ไว้ที่ 2 เสมอ ไม่ว่าจะเลือกกี่คอลัมน์ก็ตาม ทำให้บนมือถือ/แท็บเล็ตจอแคบกดเลือก
-        // "6 คอลัมน์" แล้วไม่มีอะไรเกิดขึ้นเลย เพราะ class md:grid-cols-6 ยังไม่ทำงานที่ความกว้าง
-        // นั้น — ผู้ใช้เลือกเองแล้วต้องเห็นผลทันทีทุกขนาดจอ ไม่ควรมี breakpoint มาทับ
         if (grid) grid.className = `grid gap-3 grid-cols-${cols}`;
         try { localStorage.setItem('pos_products_grid_cols', cols); } catch (e) {}
       };
@@ -3384,9 +3494,6 @@ for (const [pp, vv] of _variantOwner) {
         window.updateCartUI();
       };
 
-      // BUG FIX: called from loadDatabaseState() via optional chaining but never defined —
-      // silently no-op'd, so the cart's customer dropdown never reflected customers freshly
-      // pulled from Supabase until the cart happened to be reopened (which repopulates it itself).
       window.populateCustomerSelect = function() {
         const custSelect = document.getElementById('pay-customer-select');
         if (custSelect) {
@@ -3402,6 +3509,7 @@ for (const [pp, vv] of _variantOwner) {
         window.updateCartUI();
         document.getElementById('modal-cart').classList.remove('hidden');
         document.getElementById('modal-cart').classList.add('flex');
+        window.posHooks.emit('cart:open');
       };
 
       // ==========================================
@@ -3444,6 +3552,7 @@ for (const [pp, vv] of _variantOwner) {
         if (document.getElementById('pay-cash-change')) {
           document.getElementById('pay-cash-change').innerText = formatMoney(change > 0 ? change : 0);
         }
+        window.posHooks.emit('pay:calc');
       };
 
       // Shared running-number generator for any document type (bills, goods-receipt notes,
@@ -3474,7 +3583,7 @@ for (const [pp, vv] of _variantOwner) {
       window.currentCartTotal = function() { return window.calcCartTotals(cart, document.getElementById('cart-discount-input')?.value, document.getElementById('cart-discount-type')?.value).grandTotal; };
       window.getAutoSku = function() { return getRunningDocNumber('SKU', 'lastSKUDate', 'dailySKUNum'); };
 
-      window.processPaymentRequest = async function() {
+      async function processPaymentCore() {
         if (cart.length === 0) return alert("ตะกร้าสินค้าว่างเปล่า");
 
         const grandTotalStr = String(window.currentCartTotal());
@@ -3528,9 +3637,6 @@ for (const [pp, vv] of _variantOwner) {
           customerId: cid,
           cashierId: db.activeUser?.id || null,
           cashierName: db.activeUser?.name || null,
-          // BUG FIX: เดิมบิลไม่เก็บว่าขายตอนกะไหน ทำให้โค้ด sync ต้องเดาโดยอ่าน db.currentShift
-          // ณ เวลาที่ sync รัน (ซึ่งอาจเป็นกะใหม่ไปแล้ว หรือร้านปิดไปแล้วก็ได้ null) เก็บตรงนี้
-          // ทันทีตอนขาย ให้เป็น source of truth เดียวสำหรับทุกจุดที่ sync ขึ้น Supabase
           shiftId: db.currentShift?.id || null
         };
         if (db.settings && db.settings.vatRegistered && +db.settings.vatRate > 0) {
@@ -3580,9 +3686,34 @@ for (const [pp, vv] of _variantOwner) {
           window.showToast('บันทึกบิลในเครื่องแล้ว — กำลังรอซิงก์ขึ้นคลาวด์');
         }
         window.flushSyncQueue?.().catch(e => console.warn('Sale sync deferred:', errMsg(e)));
+      }
+
+      // จุดเข้าเดียวของการชำระเงิน: ตรวจสิทธิ์ -> ทำรายการ -> แจ้งเหตุการณ์ (เสียง/อีเวนต์ขายสำเร็จ)
+      window.processPaymentRequest = async function() {
+        if (!window.canDo('SALE')) return window.posDenied('SALE');
+        if (activePayMethod === 'CREDIT' && !window.canDo('CREDIT_SALE')) return window.posDenied('CREDIT_SALE');
+        const disc = parseFloat(document.getElementById('cart-discount-input')?.value) || 0;
+        if (disc > 0 && !window.canDo('DISCOUNT')) return window.posDenied('DISCOUNT');
+
+        const billsBefore = (db.bills || []).length;
+        const total = Number(window.currentCartTotal()) || 0;
+        const received = parseFloat(document.getElementById('pay-cash-received')?.value) || 0;
+        const isCash = activePayMethod === 'CASH';
+        let res;
+        try { res = await processPaymentCore.apply(this, arguments); }
+        catch (e) { window.posHooks.emit('pay:error', e); throw e; }
+        const sold = (db.bills || []).length > billsBefore;
+        window.posHooks.emit('pay:end', { sold, total, received, isCash });
+        if (sold) {
+          try { document.dispatchEvent(new CustomEvent('pos:sale-complete', { detail: {
+            total, received,
+            change: (isCash && total > 0 && received >= total) ? Math.round((received - total) * 100) / 100 : 0
+          } })); } catch (e) {}
+        }
+        return res;
       };
 
-      // (v10) การส่งบิลขึ้นเซิร์ฟเวอร์ย้ายไปที่คิวซิงค์ — ดู window.enqueueSync / runSale ในโมดูล v10 ท้ายไฟล์
+      // การส่งบิลขึ้นเซิร์ฟเวอร์ย้ายไปที่คิวซิงค์ — ดู window.enqueueSync / runSale ในโมดูลคิวซิงค์ท้ายไฟล์
       window.syncBillToSupabaseRPC = function(bill) { window.enqueueSync({ type: 'sale', payload: { billId: bill.id } }); };
 
       // ============================================================
@@ -3760,7 +3891,11 @@ for (const [pp, vv] of _variantOwner) {
         window.renderStockTable();
       };
 
-      window.renderStockTable = function() {
+      const STOCK_PAGE_SIZE = 100;
+      let stockRenderLimit = STOCK_PAGE_SIZE, stockRenderSig = '';
+      window.stockShowMore = function() { stockRenderLimit += 200; window.renderStockTable(); };
+
+      const renderStockTableCore = function() {
         // Clear any selection on every re-render (search/filter/sort change the row set, so a
         // stale selection referencing rows no longer shown would be confusing) — also hides
         // the bulk toolbar until the user checks something again.
@@ -3782,6 +3917,10 @@ for (const [pp, vv] of _variantOwner) {
         document.querySelectorAll('[id^="sort-arrow-"]').forEach(el => el.innerHTML = '');
         const activeArrow = document.getElementById('sort-arrow-' + stockSortBy);
         if (activeArrow) activeArrow.innerHTML = stockSortDir === 'asc' ? '▲' : '▼';
+
+        // ตัวกรอง/การเรียงเปลี่ยน -> กลับไปแสดงหน้าแรก (วาดใหม่เฉยๆ เช่น หลังแก้ไขสินค้า คงจำนวนที่เปิดไว้)
+        const sig = [search, catFilter, statusFilter, stockSortBy, stockSortDir].join('|');
+        if (sig !== stockRenderSig) { stockRenderSig = sig; stockRenderLimit = STOCK_PAGE_SIZE; }
 
         let flt = [];
         Object.values(db.products).forEach(p => {
@@ -3832,7 +3971,8 @@ for (const [pp, vv] of _variantOwner) {
           return;
         }
 
-        tbody.innerHTML = flt.map((item, idx) => {
+        const shown = flt.slice(0, stockRenderLimit);
+        tbody.innerHTML = shown.map((item, idx) => {
           const p = item.p, v = item.v, isBelowMin = item.isBelowMin, isOut = item.isOut;
           const fractionsHtml = (v.fractions || []).map(f => `
             <span class="inline-block bg-slate-100 border rounded px-1.5 py-0.5 mr-1 mb-1 text-[10px] font-bold text-slate-600">
@@ -3889,7 +4029,15 @@ for (const [pp, vv] of _variantOwner) {
               </td>
             </tr>
           `;
-        }).join('');
+        }).join('') + (flt.length > shown.length
+          ? `<tr><td colspan="15" class="p-4 text-center"><button onclick="window.stockShowMore()" class="bg-indigo-50 text-indigo-700 font-black text-xs px-5 py-2.5 rounded-xl btn-touch">แสดงเพิ่ม (เหลืออีก ${flt.length - shown.length} จาก ${flt.length} รายการ)</button></td></tr>`
+          : '');
+      };
+
+      window.renderStockTable = function() {
+        const r = renderStockTableCore.apply(this, arguments);
+        window.posHooks.emit('stock:render');
+        return r;
       };
 
       // ==========================================
@@ -4058,11 +4206,6 @@ for (const [pp, vv] of _variantOwner) {
         if (ids.length < 2) return false;
         const target = db.products[ids[0]];
         if (!target) return false;
-        // BUG FIX: merging used to just `delete db.products[srcId]` locally with no
-        // corresponding delete on Supabase — the merged-away product rows (and their
-        // product_variants/product_categories junction rows) were left orphaned in the
-        // cloud database forever, since upsert() never removes rows that stop appearing
-        // locally. Now mirrors the same best-effort cloud delete window.deleteProduct() uses.
         const mergedAwayIds = [];
         ids.slice(1).forEach(srcId => {
           const src = db.products[srcId];
@@ -4156,12 +4299,6 @@ for (const [pp, vv] of _variantOwner) {
       // ==========================================
       // GOODS RECEIPT & MASTER SETTINGS
       // ==========================================
-      // BUG FIX / UX: this used to be a plain <select> listing every product as a flat
-      // alphabetical dropdown — fine for a handful of items, unusable once the catalog grows,
-      // since finding one SKU meant scrolling through the entire list. Replaced with a
-      // type-to-search picker (matches name / SKU / barcode) that shows the product photo and
-      // current stock right in the results, so the right item can be found in a couple of
-      // keystrokes even without knowing exactly which category it's filed under.
       window.onPOProductChange = function() {
         const pid = document.getElementById('po-product-picker-value').value;
         const p = db.products[pid];
@@ -4368,11 +4505,6 @@ for (const [pp, vv] of _variantOwner) {
 
       // Populates the supplier dropdown and clears/resets the product search picker so it's
       // ready to search fresh (e.g. after the product catalog changes elsewhere).
-      // BUG FIX: this function was called from three places (showView, saveSupplier,
-      // saveProduct/deleteProduct) via `window.populatePOPickers?.()` and `window.renderPOPicker?.()`
-      // but neither was ever actually defined anywhere — the supplier select was silently,
-      // permanently empty, so a supplier could never be chosen and the whole "receive goods"
-      // feature was unusable no matter what confirmReceivePO() did.
       window.populatePOPickers = function() {
         const supSel = document.getElementById('po-supplier-select');
         if (supSel) {
@@ -4644,7 +4776,7 @@ for (const [pp, vv] of _variantOwner) {
       const normZipPath = p => { const out = []; p.split('/').forEach(seg => { if (seg === '..') out.pop(); else if (seg && seg !== '.') out.push(seg); }); return out.join('/'); };
       async function readEmbeddedPhotos(buf){
         const map = new Map();
-        if (!window.JSZip) return map;
+        try { await window.posLoadLib('jszip'); } catch (e) { return map; }
         const zip = await JSZip.loadAsync(buf);
         const readText = async p => { const f = zip.file(p); return f ? await f.async('string') : null; };
         const relTargets = async (relPath, baseDir) => {
@@ -4693,7 +4825,7 @@ for (const [pp, vv] of _variantOwner) {
         e.target.value = '';
         if (!file) return;
         try {
-          if (!window.XLSX) throw new Error('ไม่พบไลบรารี SheetJS — ตรวจการเชื่อมต่ออินเทอร์เน็ต');
+          await window.posLoadLib('xlsx');
           const buf = await file.arrayBuffer();
           const wb = XLSX.read(new Uint8Array(buf), { type: 'array' });
           const sheetName = wb.SheetNames.includes('รายการสินค้า') ? 'รายการสินค้า' : wb.SheetNames[0];
@@ -5102,24 +5234,18 @@ for (const [pp, vv] of _variantOwner) {
           ? `บันทึกใบลดหนี้ ${creditNoteNo} เรียบร้อย: หักยอดหนี้ ${formatMoney(refundTotal)}`
           : `บันทึกใบลดหนี้ ${creditNoteNo} เรียบร้อย: คืนเงิน ${formatMoney(refundTotal)}`);
 
-        // BUG FIX (#1): เดิมจบแค่ตรงนี้ — สถานะบิล/สต็อกที่คืนไม่เคยไปถึง Supabase เลยถ้าบิลนั้น
-        // เคย sync ผ่าน RPC ไปแล้ว (ติดธง _syncedViaRPC ถาวร) เรียก process_return แบบ
-        // fire-and-forget เหมือนแพทเทิร์นเดียวกับ syncBillToSupabaseRPC — ถ้าออฟไลน์/พลาด ข้อมูล
-        // ก็ยังถูกต้องในเครื่องเหมือนเดิม แค่รอ sync รอบถัดไปไม่ได้ (ไม่มี batch fallback สำหรับ
-        // การคืนสินค้าในตอนนี้ เพราะต้องรู้ bill server-side id ก่อน — ปล่อยให้กดซิงค์ใหม่ได้จาก
-        // ปุ่ม forceSyncNow ถ้าพลาดจริง)
         window.enqueueSync({ type: 'return', payload: { billId: bill.id, items: rpcItems.map(i => ({ variant_id: i.variant_id, fraction_id: i.fraction_id, quantity: i.quantity, unit_price: i.unit_price })), restock: _restock, returnRef: creditNoteNo, shiftId: db.currentShift?.id || null, isCredit, customerId: bill.customerId, refund: refundTotal, fully: fullyReturned } });
       };
-
-      window.syncReturnToSupabaseRPC = function() { /* v10: ใช้คิวซิงค์ (type 'return') แทน */ };
 
       // CAMERA SCANNER
       // Generalized to scan into any target input (defaults to the sale-page search box) —
       // reused by the product form's barcode field for fast entry instead of typing by hand.
-      window.startCameraScan = function(targetInputId) {
+      window.startCameraScan = async function(targetInputId) {
         window._scanTargetId = targetInputId || 'search-product';
         document.getElementById('modal-camera').classList.remove('hidden');
         document.getElementById('modal-camera').classList.add('flex');
+        try { await window.posLoadLib('qrcode'); }
+        catch (e) { window.stopCameraScan(); return window.showAlert?.('เปิดกล้องไม่ได้', e.message, true); }
         if (!scanner) scanner = new Html5Qrcode("reader");
         scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: 250 }, (text) => {
           window.stopCameraScan();
@@ -5147,6 +5273,7 @@ for (const [pp, vv] of _variantOwner) {
       };
 
       window.showAlert = function(title, desc, isError = false) {
+        window.posHooks.emit('ui:notice', { type: 'แจ้งเตือน', args: [title, desc, isError] });
         document.getElementById('custom-alert-title').innerText = title;
         document.getElementById('custom-alert-desc').innerText = desc;
         document.getElementById('custom-alert-modal').classList.remove('hidden');
@@ -5154,6 +5281,7 @@ for (const [pp, vv] of _variantOwner) {
       };
 
       window.showToast = function(msg) {
+        window.posHooks.emit('ui:notice', { type: 'กิจกรรม', args: [msg] });
         const toast = document.getElementById('toast');
         document.getElementById('toast-message').innerText = msg;
         toast.style.transform = 'translateY(0)';
@@ -5169,20 +5297,12 @@ for (const [pp, vv] of _variantOwner) {
       window.addEventListener('DOMContentLoaded', () => {
         window.renderSaleHome?.();
         window.refreshAuthStatus?.();
-        // BUG FIX: syncCategoryBarOffset() used to only run on window 'resize', never on
-        // initial load — the category bar and pagination bar (both position:sticky, set via
-        // inline style.top computed here) never got a starting `top` value. Without it the two
-        // bars can end up stacked on top of each other at the same position, with the
-        // higher z-index category bar sitting over the pagination bar's ‹ › buttons and
-        // silently swallowing every tap on them ("ปุ่มเปลี่ยนหน้าไม่ทำงาน/ล็อก"). Running it once
-        // here (and again after every category/page render, below) keeps the offsets correct
-        // from the very first paint.
         setTimeout(() => window.syncCategoryBarOffset?.(), 0);
       });
     </script>
   
 <script>
-/* Smart POS Pro V9.63 SQL Schema Compatibility Bridge */
+/* Smart POS Pro V1.0 SQL Schema Compatibility Bridge */
 (function(){
   window.SQL_SCHEMA_VERSION='Smart_POS_Pro_Enterprise_Full_Database_Schema';
 
@@ -5242,15 +5362,6 @@ for (const [pp, vv] of _variantOwner) {
     }
     throw new Error(`ตาราง ${table} มีข้อมูลเกิน ${MAX_ROWS.toLocaleString()} แถว ระบบหยุดเพื่อป้องกันการโหลดไม่ครบโดยไม่แจ้งเตือน`);
   }
-  // BUG FIX: this used to run automatically on every page load (50ms after DOMContentLoaded)
-  // and would silently wipe out db.products with whatever Supabase returned — including an
-  // EMPTY catalog if this was the first-ever connection before anything had been pushed up yet.
-  // It also re-keyed every product/customer using Supabase's own row UUID instead of the
-  // original local id, which is what the cart, receipts, and bill history all still referred
-  // to — breaking those references on the very next reload. Pulling from the cloud is now an
-  // explicit action (Settings > ฐานข้อมูล Supabase > "ดึงข้อมูลจากคลาวด์"), and the merge below
-  // matches existing local products/customers by SKU/phone so their local id — and any
-  // in-progress local edits to stock — are preserved rather than overwritten.
   window.loadDatabaseState=async function(silent){
     const c=sb(); if(!c) return false;
     // Run each table fetch independently (allSettled, not all) so a problem with one table
@@ -5285,7 +5396,7 @@ for (const [pp, vv] of _variantOwner) {
     try{
       const {categories:cats,products:prods,product_categories:links,product_variants:vars,product_fractions:fracs,customers:custs,bills}=results;
       window.db=window.db||{};
-      // (v10) ส่งคิวที่ค้างให้เสร็จก่อน — ถ้ายังมีรายการค้าง จะไม่เอาสต็อก/ยอดหนี้จากเซิร์ฟเวอร์มาทับ (เพราะยังไม่รวมรายการเหล่านั้น)
+      // ส่งคิวที่ค้างให้เสร็จก่อน — ถ้ายังมีรายการค้าง จะไม่เอาสต็อก/ยอดหนี้จากเซิร์ฟเวอร์มาทับ (เพราะยังไม่รวมรายการเหล่านั้น)
       await window.flushSyncQueue?.(true);
       const _hasPending=(db.syncQueue||[]).length>0;
 
@@ -5426,20 +5537,8 @@ for (const [pp, vv] of _variantOwner) {
     window.loadDatabaseState(false);
   };
 
-  // NOTE: previously this read from different localStorage keys ('pos_sb_url'/'pos_sb_key')
-  // than the Settings UI actually saves to ('pos_supabase_url'/'pos_supabase_anon_key' via
-  // window.getSupabaseClient), so this bridge's client was always null and every RPC call
-  // below silently no-op'd. Reuse the real client so the RPC path actually connects.
   window.getSupabase = window.getSupabaseClient;
 
-  // NOTE: this used to also carry window.calculateCartViaDBServer / window.processDatabaseCheckout
-  // — a second, disconnected "database-authoritative checkout" path from an earlier iteration
-  // of this app. It was never wired to any button (window.processPaymentRequest + the
-  // window.syncBillToSupabaseRPC → create_sale RPC pairing is the real, active checkout path),
-  // and it called calculate_order_totals / process_checkout_transaction, neither of which exist
-  // in this schema (superseded by create_sale, which computes totals server-side from the line
-  // items itself). Removed rather than updated, since dead code referencing functions that no
-  // longer exist is worse than no code at all.
 
   // Cloud pull is now explicit only (see window.confirmPullFromCloud, wired to the Settings
   // button) — no longer runs automatically on page load. See the note above loadDatabaseState.
@@ -5555,17 +5654,6 @@ const sb=()=>window.getSupabase?.()||null;
 const rolePerm=r=>r==='OWNER'?['ALL']:r==='MANAGER'?['SALE','PRODUCT_CREATE','PRODUCT_EDIT','PRODUCT_DELETE','PURCHASE_ORDER','GOODS_RECEIPT','REPORTS']:['SALE'];
 function ensure(){if(!window.db)return;db.users=db.users||[];if(!db.users.some(u=>u.role==='OWNER'))db.users.unshift({id:'owner-local',name:'เจ้าของร้าน',needsPinSetup:true,role:'OWNER',permissions:['ALL'],protected:true});db.users.forEach(u=>{u.role=u.role||'CASHIER';u.permissions=u.permissions||rolePerm(u.role);});window.migratePlaintextPins?.();}
 window.ensure = ensure; // เพิ่มขึ้นมา: ให้สคริปต์บล็อกอื่น (เช่นตัวช่วยตั้งค่าเริ่มต้น) เรียกใช้ได้ด้วย ของเดิม scope ปิดอยู่ในนี้ที่เดียว
-// BUG FIX: this used to persist only {users, suppliers, purchaseOrders, cashLedger} to
-// localStorage. Everything else — every sale (db.bills), every stock/product change
-// (db.products), every customer & their debt (db.customers), categories, store settings —
-// was NEVER saved locally at all. With no Supabase connection configured (fully optional),
-// a page refresh or the browser tab being killed silently wiped out an entire day's sales.
-// Now the whole db object is persisted as one blob, matching the "Offline-First" behavior
-// the manual describes.
-// BUG FIX (#5): เดิมถ้า localStorage เต็ม (ง่ายมากถ้ามีรูปสินค้าเป็น base64 ปนอยู่เยอะๆ — ดู
-// bulk image import fallback) จะ catch เงียบๆ แค่ console.warn ผู้ใช้เห็น toast "บันทึกการขาย
-// สำเร็จ" ตามปกติ ทั้งที่ข้อมูลไม่ถูกเขียนลงเครื่องเลยจริงๆ — เพิ่ม throttle กันเด้งซ้ำถี่เกินไป
-// (ครั้งต่อไปห่างกันอย่างน้อย 10 วิ) แล้วโชว์ alert ที่มองเห็นได้จริงแทน
 let _persistFailAlertAt = 0;
 let _persistTimer = null, _persistPending = false, _persistLastAt = 0;
 const PERSIST_GAP_MS = 300;   // เขียนทั้งฐานถี่สุดทุก 300 มิลลิวินาที (เดิมทุกครั้งที่เรียก — ทำรายการเดียวเรียกหลายครั้งติดกัน)
@@ -5608,6 +5696,7 @@ window.persistDurably = async function(){
 };
 function persist(){
   if(window.__factoryResetting) return;   // กำลังล้างข้อมูล: ห้ามเขียนกลับ
+  window.posHooks.emit('persist');
   // ว่างอยู่ → เขียนทันที (พฤติกรรมเดิม) / เรียกถี่ติดกัน → รวมเป็นการเขียนครั้งเดียวท้ายช่วง
   const since=Date.now()-_persistLastAt;
   if(!_persistTimer && since>=PERSIST_GAP_MS){ persistNow(); return; }
@@ -5663,21 +5752,11 @@ try{
 }catch(e){console.warn('Local state restore failed',e);}
 window.persist=persist;
 window.__closeOfflineIdb=function(){const p=_offlineIdb;_offlineIdb=null;return p?p.then(d=>d.close()).catch(()=>{}):Promise.resolve();};
-window.canDo=p=>{ensure();const u=db.activeUser||((db.users||[]).some(x=>x.pinHash)?null:db.users.find(x=>x.role==='OWNER'));return !!u&&(u.role==='OWNER'||u.permissions?.includes('ALL')||u.permissions?.includes(p));};
 const ok=p=>window.canDo(p)||(window.showAlert?.('ไม่มีสิทธิ์','บัญชีนี้ไม่มีสิทธิ์ทำรายการนี้',true),false);
 ensure();
 
 window.openUserManagerModal=window.switchSettingsTab?()=>window.switchSettingsTab('USERS'):function(){};
 window.renderUserManagerList=function(){ensure();const c=document.getElementById('user-manager-list');if(!c)return;c.innerHTML=db.users.map(u=>`<div class="bg-slate-50 p-3 rounded-xl border flex justify-between"><div><b>${esc(u.name)}</b><span class="block text-[10px] text-indigo-600">${u.role==='OWNER'?'เจ้าของร้าน':u.role==='MANAGER'?'ผู้จัดการ':'พนักงานขาย'}</span></div><div class="flex gap-2"><button onclick="window.editUser('${u.id}')" class="text-indigo-600 font-bold">แก้ไข</button>${u.role==='OWNER'?'<span class="text-slate-400 text-[10px]">ป้องกันลบ</span>':`<button onclick="window.deleteUser('${u.id}')" class="text-rose-500 font-bold">ลบ</button>`}</div></div>`).join('');};
-// NOTE: the PIN input is intentionally left blank when editing — pin_hash cannot be reversed
-// back into the original PIN, so re-entering it is only required when actually changing it.
-window.editUser=id=>{const u=db.users.find(x=>x.id===id);if(!u)return;document.getElementById('edit-user-id').value=id;document.getElementById('user-name-input').value=u.name;document.getElementById('user-pin-input').value='';document.getElementById('user-pin-input').placeholder='ใส่ PIN ใหม่ (เว้นว่างไว้ถ้าไม่เปลี่ยน)';const r=document.getElementById('user-role-input');if(!r)return window.showAlert?.('ผิดพลาด','ไม่พบช่องกำหนดบทบาทผู้ใช้',true);r.value=u.role;};
-// BUG FIX (security): PINs were stored and would have been synced to Supabase as plaintext —
-// anyone with the anon key could read every employee's PIN straight out of the database.
-// Now only a SHA-256 hash (window.hashPin) is ever stored in db.users[].pinHash / sent as
-// app_users.pin; the raw digits never leave the input field.
-window.saveUser=async function(){if(!ok('ALL'))return;ensure();const id=document.getElementById('edit-user-id').value,n=document.getElementById('user-name-input').value.trim(),pin=document.getElementById('user-pin-input').value.trim(),role=document.getElementById('user-role-input')?.value||'CASHIER';if(!n)return window.showAlert?.('ข้อมูลไม่ถูกต้อง','กรุณากรอกชื่อพนักงาน',true);if(pin&&!/^\d{4}$/.test(pin))return window.showAlert?.('ข้อมูลไม่ถูกต้อง','PIN ต้องเป็นตัวเลข 4 หลัก',true);if(pin&&window.WEAK_PINS.includes(pin))return window.showAlert?.('PIN เดาง่ายเกินไป','เลือก PIN ที่ไม่ใช่เลขซ้ำ/เรียงกัน (เช่น 0000, 1234)',true);if(id){const u=db.users.find(x=>x.id===id);if(u.role==='OWNER'&&role!=='OWNER')return window.showAlert?.('ไม่อนุญาต','ไม่สามารถลดสิทธิ์เจ้าของร้านได้',true);const upd={name:n,role,permissions:rolePerm(role)};if(pin)upd.pinHash=await window.makePinHash(pin);delete u.pin;Object.assign(u,upd);}else{if(!pin)return window.showAlert?.('ข้อมูลไม่ถูกต้อง','กรุณากำหนด PIN 4 หลักให้พนักงานใหม่',true);db.users.push({id:'u-'+Date.now(),name:n,role,permissions:rolePerm(role),pinHash:await window.makePinHash(pin)});}persist();window.renderUserManagerList();window.renderEmployeeLoginScreen?.();};
-window.deleteUser=id=>{if(!ok('ALL'))return;const u=db.users.find(x=>x.id===id);if(!u||u.role==='OWNER')return window.showAlert?.('ไม่อนุญาต','ไม่สามารถลบเจ้าของร้านได้',true);db.users=db.users.filter(x=>x.id!==id);persist();window.renderUserManagerList();window.renderEmployeeLoginScreen?.();};
 
 // Migrates any legacy plaintext `pin` field (from before this fix, including the hardcoded
 // '0000' owner default) into a hashed `pinHash`, one time, so nothing plaintext lingers in
@@ -5693,7 +5772,7 @@ window.renderEmployeeLoginScreen=function(){
   ensure();
   const el=document.getElementById('login-employee-select');
   if(!el)return;
-  el.innerHTML=(db.users||[]).map(u=>`
+  el.innerHTML=(db.users||[]).filter(u=>u.active!==false).map(u=>`
     <button onclick="window.selectEmployeeForLogin('${u.id}')" class="w-full flex items-center gap-3 p-3 bg-slate-50 hover:bg-indigo-50 rounded-2xl border text-left btn-touch transition-colors">
       <span class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-black flex-shrink-0">${esc((u.name||'?').charAt(0))}</span>
       <div><b class="block text-sm text-slate-800">${esc(u.name)}</b><span class="text-[10px] text-slate-400">${u.role==='OWNER'?'เจ้าของร้าน':u.role==='MANAGER'?'ผู้จัดการ':'พนักงานขาย'}</span></div>
@@ -5774,23 +5853,19 @@ let _pinFails = {}, _pinSetupFirst = null;
     _loginPinBuffer = '';
     document.getElementById('screen-employee-login').classList.add('hidden');
     window.resetIdleTimer?.();
-    window.updateActiveUserBadge?.();
     window.showToast?.(`สวัสดี ${u.name} 👋`);
     if (weak) window.showAlert?.('⚠️ PIN เดาง่าย', 'บัญชีนี้ใช้ PIN ที่เดาง่าย กรุณาเปลี่ยนที่ ตั้งค่า > ผู้ใช้งาน', true);
+    window.posHooks.emit('auth:login', u);
   };
 
   window.lockPOS=function(){
+  window.posHooks.emit('auth:lock');
   db.activeUser=null;
   window.backToEmployeeSelect();
   window.renderEmployeeLoginScreen();
   document.getElementById('screen-employee-login').classList.remove('hidden');
-  window.updateActiveUserBadge?.();
 };
 
-window.updateActiveUserBadge=function(){
-  const el=document.getElementById('active-user-badge');
-  if(el)el.innerText=db.activeUser?`👤 ${db.activeUser.name}`:'';
-};
 
 // Auto-lock after 10 minutes idle — protects against a cashier walking away from an
 // unlocked terminal. Any click/touch/keypress resets the timer.
@@ -5808,11 +5883,6 @@ document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>window.renderEm
 // ==========================================
 // PRODUCT FORM — modernized: photo capture, barcode scan-to-field, multiple sizes/variants
 // per product added in one form, and split-sale ("แบ่งขาย") units manageable per variant.
-// BUG FIX: the old single-variant form always saved `variants:[{...one row...}]` — editing an
-// existing product that had more than one size (e.g. pulled in from Supabase) silently
-// DISCARDED every size but the first the moment it was saved. Now every existing variant loads
-// into the editable list and is preserved.
-// ==========================================
 let pmVariants = [];
 let pmSelectedCats = []; // multi-category selection state for the product being edited
 
@@ -6246,12 +6316,6 @@ window.deleteProduct = async id => {
   window.populatePOPickers?.();
 };
 
-// NOTE: the action-column patch that used to live here (bolting a "แก้ไข/ลบ" cell onto each
-// row by matching Object.values(db.products)[rowIndex]) has been removed — it silently
-// targeted the wrong product for any item with more than one variant, or whenever a filter,
-// sort, or search reduced/reordered the rows (which is most of the time). The action buttons
-// are now built directly into each row in window.renderStockTable() using the row's actual
-// product id, so they can never point at the wrong product.
 
 window.confirmReceivePO=async function(){if(!ok('GOODS_RECEIPT'))return;const supplierId=document.getElementById('po-supplier-select').value;let docRef=document.getElementById('po-doc-ref').value.trim();const terms=parseInt(document.getElementById('po-credit-terms').value)||30;if(!supplierId)return window.showAlert?.('ข้อมูลไม่ครบ','กรุณาเลือกซัพพลายเออร์',true);if(!poTempItems?.length)return window.showAlert?.('ไม่มีรายการ','กรุณาเพิ่มรายการรับสินค้า',true);if((document.getElementById('po-pay-mode')?.value)==='CASH'&&!db.currentShift)return window.showAlert?.('ยังไม่ได้เปิดกะ','การจ่ายสดจากลิ้นชักต้องเปิดกะก่อน หรือเลือกวิธีชำระอื่น',true);
   // เลขที่ใบส่งของ is now optional — if the supplier's own delivery-note number wasn't typed
@@ -6287,10 +6351,6 @@ window.confirmReceivePO=async function(){if(!ok('GOODS_RECEIPT'))return;const su
   // receiving path — it locks rows, validates received quantity against ordered quantity, and
   // writes an inventory_movements audit entry). Runs in the background so the cashier flow
   // above never blocks on network; local stock/AP are already authoritative either way.
-  // NOTE: receive_purchase_order requires the signed-in Supabase session to belong to an
-  // OWNER or MANAGER app_user (enforced by is_manager() inside the function itself) — this
-  // silently no-ops (logged to console only) if that's not the case, same as every other
-  // background sync in this app.
   window.enqueueSync({type:'receive',payload:{receiptId:receipt.id,apId:apEntry.id,payNow:apEntry.status==='PAID'}});
 };
 
@@ -6633,7 +6693,7 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
   // ---------- ส่งออกรายการสินค้า: 1 แถว = 1 ขนาด หรือ 1 หน่วยย่อย (ตามที่ตกลง) ----------
   window.PRODUCT_SHEET_COLUMNS = ['ลำดับ','หมวดหมู่หลัก','หมวดหมู่ย่อย','รูปสินค้า','รหัสสินค้า (SKU)','รหัสบาร์โค้ด','ชื่อสินค้า','ขนาด/รุ่น','หน่วย','ราคาทุน','ราคาขาย','กลุ่มสินค้า','ประเภทแถว','รหัสสินค้าหลัก','จำนวนหน่วยย่อยต่อ 1 หน่วยหลัก','จำนวนคงเหลือ','ขั้นต่ำ','สถานะ'];
   window.exportProductsToExcel = async function(){
-    if (!window.ExcelJS) return window.showAlert?.('ผิดพลาด', 'ไม่พบไลบรารี ExcelJS — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต', true);
+    try { await window.posLoadLib('exceljs'); } catch (e) { return window.showAlert?.('ผิดพลาด', e.message, true); }
     const catByName = new Map((db.categories || []).map(c => [c.name, c]));
     const catById = new Map((db.categories || []).map(c => [c.id, c]));
     const mainSub = p => {
@@ -6739,7 +6799,7 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
   // Only works for images reachable over HTTP(S) or already embedded as data URLs — a
   // photo that only exists on someone else's device (never uploaded) can't be fetched.
   window.exportProductImagesZip = async function(){
-    if (!window.JSZip) return window.showAlert?.('ผิดพลาด', 'ไม่พบไลบรารี JSZip — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต', true);
+    try { await window.posLoadLib('jszip'); } catch (e) { return window.showAlert?.('ผิดพลาด', e.message, true); }
     const withPhotos = Object.values(db.products || {}).filter(p => p.imageUrl);
     if (!withPhotos.length) return window.showAlert?.('ไม่มีรูปภาพ', 'ยังไม่มีสินค้าที่แนบรูปภาพไว้ (imageUrl)', true);
 
@@ -6965,11 +7025,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
     const client = window.getSupabaseClient?.();
     if (!client) return window.showAlert?.('ยังไม่ได้เชื่อมต่อ', 'ต้องเชื่อมต่อ Supabase ก่อนถึงจะลบรูปได้', true);
 
-    // BUG FIX: เดิมส่งไฟล์ทั้งหมดไปลบใน .remove() ครั้งเดียว — ถ้ามีเป็นพันไฟล์ (เจอจริงในร้านที่มี
-    // สินค้าเยอะ เช่น 2087 ไฟล์) เสี่ยง request timeout หรือพังกลางทางโดยไม่รู้เลยว่าลบไปแล้วกี่ไฟล์
-    // และไม่มีทางลองใหม่เฉพาะไฟล์ที่ค้างได้ — แก้เป็นแบ่งลบทีละชุด (100 ไฟล์/ครั้ง) พร้อมโชว์ความ
-    // คืบหน้าบนปุ่มเอง ถ้าชุดไหนพลาดจะเก็บเฉพาะไฟล์ที่ยังไม่สำเร็จไว้ใน window._orphanImages ทำให้
-    // กดปุ่ม "ลบทั้งหมด" ซ้ำ = ลองใหม่เฉพาะไฟล์ที่ค้างเท่านั้น ไม่ต้องเริ่มใหม่ทั้งชุด
     const CHUNK = 100;
     const failed = [];
     let doneCount = 0;
@@ -7081,10 +7136,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
     if (!client) issues.push({ level: 'info', title: 'ยังไม่ได้เชื่อมต่อ Supabase — ข้ามการตรวจรูปบนเซิร์ฟเวอร์', count: 0, detail: 'เชื่อมต่อในตั้งค่าแล้วกดตรวจใหม่เพื่อเทียบรูปกับ Storage' });
     if (client) {
       try {
-        // BUG FIX: .list() คืนมาสูงสุดตาม limit ต่อครั้งเท่านั้น (limit:1000 เดิม) — ร้านที่มีรูป
-        // สินค้าเกิน 1000 ไฟล์จะเห็นแค่หน้าแรก ทำให้ไฟล์จริงที่มีอยู่แต่อยู่นอกหน้าแรกถูกเข้าใจผิด
-        // ว่า "ไม่มีอยู่จริง" ไปหมด (นี่คือสาเหตุจริงที่ตัวเลขออกมาสูงผิดปกติ เช่น 1000+ รายการ ทั้งที่
-        // รูปยังอยู่ครบ) แก้โดยวนดึงทีละหน้าจนกว่าจะได้หน้าที่สั้นกว่า limit (แปลว่าหมดแล้วจริงๆ)
         const PAGE = 1000;
         let files = [], offset = 0, guard = 0;
         while (guard++ < 50) {
@@ -7372,7 +7423,7 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
 </script>
 <script>
 // ============================================================================
-// v10 — คิวซิงค์ (sync queue), ค่าตั้งต้นสต็อก/หนี้ (seeding), PIN แบบใหม่
+// คิวซิงค์ (sync queue), ค่าตั้งต้นสต็อก/หนี้ (seeding), PIN แบบใหม่
 // แก้ตามรายงานตรวจสอบ: ไม่มี "fallback เขียนบิลตรง" อีกต่อไป ทุกธุรกรรมไปทาง RPC บนเซิร์ฟเวอร์
 // เท่านั้น (create_sale / process_return / receive_customer_payment / adjust_stock / receive_goods)
 // ส่งไม่สำเร็จจะค้างในคิว (db.syncQueue) แล้วลองใหม่เอง — เซิร์ฟเวอร์ปฏิเสธจริง (เช่นเกินวงเงิน)
@@ -7430,18 +7481,66 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
   window.isPreventNegativeStock = function () { return !!(window.db && db.settings && db.settings.preventNegativeStock); };
 
   // ---------- คิวซิงค์ ----------
+  function syncOperationRef(op) {
+    const p = (op && op.payload) || {};
+    switch (op && op.type) {
+      case 'sale': return p.billId;
+      case 'return': return p.returnRef;
+      case 'payment': return p.opRef;
+      case 'adjust': return p.opRef;
+      case 'receive': return p.receiptId;
+      case 'delete': return p.id;
+      default: return null;
+    }
+  }
+
   window.enqueueSync = function (op, noFlush) {
+    if (!op || typeof op !== 'object' || !op.type) throw new Error('ข้อมูลคิวซิงก์ไม่ถูกต้อง');
+    const supported = ['sale', 'return', 'payment', 'adjust', 'receive', 'delete'];
+    if (!supported.includes(op.type)) throw new Error('ไม่รองรับรายการซิงก์ประเภท: ' + op.type);
+    op.payload = op.payload && typeof op.payload === 'object' ? op.payload : {};
+    const operationRef = syncOperationRef(op);
+    if (operationRef == null || String(operationRef).trim() === '') {
+      throw new Error('รายการ ' + op.type + ' ไม่มีรหัสอ้างอิงถาวร จึงไม่สามารถเข้าคิวได้');
+    }
+
     db.syncQueue = db.syncQueue || [];
-    op.id = op.id || ('Q-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7));
-    // Preserve the local actor at creation time. The server-side session must map to this
-    // exact app_users.id before an operation is sent; never sync another cashier's queue
-    // merely because an OWNER session remains active on the same device.
+    // Attach identity before dedupe so the same operation cannot silently move
+    // between cashiers when two UI events race.
+    if (['adjust', 'sale', 'delete'].includes(op.type) && !op.payload.sessionToken) {
+      const tk = window.posSessionToken?.();
+      if (tk) op.payload.sessionToken = tk;
+    }
     if (!op.actorAppUserId) op.actorAppUserId = db.activeUser?.id || null;
-    op.status = 'pending'; op.tries = 0; op.createdAt = Date.now();
+
+    // A repeated UI event must not create a second local queue row for the same
+    // business operation. Reusing the reference with different data is an error,
+    // not a duplicate success; server-side RPC idempotency remains authoritative.
+    const existing = db.syncQueue.find(x =>
+      x && x.type === op.type && String(syncOperationRef(x)) === String(operationRef)
+    );
+    if (existing) {
+      if (JSON.stringify(existing.payload || {}) !== JSON.stringify(op.payload || {}) ||
+          String(existing.actorAppUserId || '') !== String(op.actorAppUserId || '')) {
+        throw new Error('รหัสอ้างอิงรายการนี้ถูกใช้กับข้อมูลหรือผู้ทำรายการอื่นแล้ว: ' + operationRef);
+      }
+      window.refreshSyncBadge();
+      if (!noFlush && existing.status !== 'failed' && existing.status !== 'needs_review') {
+        setTimeout(() => window.flushSyncQueue(), 0);
+      }
+      return existing.id;
+    }
+
+    op.id = op.id || ('Q-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7));
+    op.status = 'pending';
+    op.tries = 0;
+    op.createdAt = Date.now();
+    op.operationRef = String(operationRef);
     db.syncQueue.push(op);
     if (window.persist) window.persist();
     window.refreshSyncBadge();
     if (!noFlush) setTimeout(() => window.flushSyncQueue(), 0);
+    return op.id;
   };
 
   window.syncQueueStats = function () {
@@ -7702,6 +7801,12 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
         // A browser PIN selection is not a Supabase identity; require the current Auth session
         // to map to the same active app_users row as the actor captured when the operation began.
         try {
+          if (typeof RUNNERS[op.type] !== 'function') {
+            op.lastError = 'ไม่รู้จักประเภทงานซิงก์: ' + String(op.type || '(ว่าง)');
+            op.status = 'needs_review';
+            if (window.persist) window.persist();
+            continue;
+          }
           if (!op.actorAppUserId) { op.lastError = 'คิวเดิมไม่มีข้อมูลผู้ทำรายการ จึงพักไว้เพื่อป้องกันการบันทึกผิดบัญชี'; op.status = 'needs_review'; if (window.persist) window.persist(); continue; }
           if (!_actorOk.has(op.actorAppUserId)) {
           const { data: authUserData, error: authUserError } = await c.auth.getUser();
@@ -7723,7 +7828,16 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
           }
         } catch (actorCheckError) {
           op.lastError = errMsg(actorCheckError);
-          op.status = 'failed';
+          // A temporary auth/network outage is not a permanent business failure.
+          // Leave the operation pending and stop this pass; never consume retry budget.
+          if (isNetworkError(actorCheckError)) {
+            if (window.persist) window.persist();
+            return window.syncQueueStats();
+          }
+          // Identity/provenance failures require an explicit human review rather
+          // than the generic "retry failed" button.
+          op.status = /ผู้ทำรายการ|บัญชีที่เข้าสู่ระบบ|ไม่พบพนักงาน|สิทธิ์ใช้งาน/i.test(op.lastError)
+            ? 'needs_review' : 'failed';
           console.warn('sync actor verification failed', op.type, op.lastError);
           if (window.persist) window.persist();
           continue;
@@ -7846,7 +7960,9 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
       banner.dataset.state='offline'; icon.textContent='●'; label.textContent='ออนไลน์ — มีบิลรอซิงก์ '+q.pending+' รายการ';
       detail.textContent='อย่าล้างข้อมูลในเครื่อง จนกว่าระบบจะแจ้งว่าซิงก์สำเร็จ';
     }else{
-      banner.dataset.state='online'; icon.textContent='●'; label.textContent='พร้อมใช้งาน';
+      var cloudDown = window.posCloudOk === false;
+      banner.dataset.state = cloudDown ? 'offline' : 'online'; icon.textContent='●';
+      label.textContent = cloudDown ? 'ออฟไลน์ (ใช้ในเครื่อง)' : 'พร้อมใช้งาน';
       detail.textContent=online?'ออนไลน์ — บิลใหม่จะเข้าคิวซิงก์กับ Supabase':'ออฟไลน์ — ใช้ข้อมูลที่มีในเครื่อง; ตรวจคิวซิงก์ก่อนปิดแอป';
     }
   }
@@ -7854,16 +7970,7 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
   window.addEventListener('offline',render);
   window.addEventListener('storage',render);
   document.addEventListener('visibilitychange',function(){if(!document.hidden)render();});
-  var oldPersist=window.persist;
-  // The application defines persist later. Observe state without replacing its persistence logic.
-  function hookPersist(){
-    if(typeof window.persist==='function' && !window.persist.__offlineStatusWrapped){
-      var original=window.persist;
-      var wrapped=function(){var r=original.apply(this,arguments); setTimeout(render,0); return r;};
-      wrapped.__offlineStatusWrapped=true; window.persist=wrapped;
-    }
-  }
-  var ticks=0, hookTimer=setInterval(function(){hookPersist(); if(++ticks>60)clearInterval(hookTimer);},250);
+  posHooks.on('persist',function(){setTimeout(render,0);});
   window.addEventListener('load',function(){
     render();
     // GitHub Pages project sites need a relative SW path so scope stays inside this repository.
@@ -7872,7 +7979,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
         if(navigator.serviceWorker.controller) render();
       }).catch(function(e){console.warn('Offline app-shell registration failed:',e);});
     }
-    setInterval(render,5000);
   });
   window.smartPOSOfflineStatus={refresh:render,queueStats:getQueueStats};
 })();
@@ -7881,7 +7987,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
 
 <!-- Smart POS observability: local activity/error log + product image audit -->
 <style>
-#sp-observe-launch{position:fixed;right:12px;bottom:88px;z-index:9900;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:11px 14px;font:700 12px system-ui;box-shadow:0 5px 22px #0003}
 #sp-observe-panel{position:fixed;inset:5vh 3vw;z-index:9901;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:18px;box-shadow:0 20px 80px #0007;display:none;flex-direction:column;overflow:hidden;font:13px/1.45 system-ui}
 #sp-observe-panel.open{display:flex}#sp-observe-panel .sp-head{background:#0f172a;color:#fff;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 #sp-observe-panel .sp-body{padding:14px;overflow:auto}#sp-observe-panel .sp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -7889,7 +7994,6 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
 #sp-observe-panel button{border-radius:9px;padding:8px 10px;font-weight:700;background:#e2e8f0;color:#0f172a}#sp-observe-panel .sp-log{border-bottom:1px solid #e2e8f0;padding:8px 0;overflow-wrap:anywhere}
 @media(min-width:700px){#sp-observe-panel{inset:8vh 12vw}#sp-observe-panel .sp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
-<button id="sp-observe-launch" type="button" aria-label="เปิดประวัติและตรวจสอบระบบ">🛠️ ตรวจระบบ / Log</button>
 <div id="sp-observe-panel" role="dialog" aria-modal="true" aria-label="ประวัติและตรวจสอบระบบ">
  <div class="sp-head"><strong>🧭 สถานะระบบ • ประวัติกิจกรรม • ตรวจรูปสินค้า</strong><button id="sp-observe-close">ปิด ✕</button></div>
  <div class="sp-body">
@@ -7939,7 +8043,7 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
     const session=sess?.data?.session;
     if(sess?.error||!session?.user){patchLocal(ev.id,{cloud:'pending',cloudError:'ยังไม่ได้เข้าสู่ระบบ Supabase'});retryIn=60000;break;}
     const u=window.db?.activeUser||{};
-    // คอลัมน์ตรงกับ public.audit_logs ใน SMART-POS-SETUP.sql
+    // คอลัมน์ตรงกับ public.audit_logs ใน SMART-POS-FULL-v13.sql
     const row={
      id:ev.id,
      created_at:ev.time,
@@ -7971,16 +8075,13 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
  setInterval(()=>{if(readOut().length)pumpCloud();},60000);
  var CLOUD_TXT={sent:'✅ ส่งขึ้นเซิร์ฟเวอร์แล้ว',pending:'⏳ รอส่ง',failed:'⚠️ ส่งไม่สำเร็จ (จะลองใหม่)',rejected:'❌ ส่งไม่ได้ (ถูกปฏิเสธ)',none:'เก็บในเครื่องเท่านั้น'};
  window.smartPOSActivityLog={add,read};
- // Observe existing UI notifications without changing their original behavior.
- function wrap(name,type){const old=window[name];if(typeof old!=='function'||old.__spObserved)return;const fn=function(){try{let msg=Array.from(arguments).map(x=>typeof x==='string'?x:JSON.stringify(x)).join(' — ');add(type,msg,'');}catch(_){}return old.apply(this,arguments)};fn.__spObserved=true;window[name]=fn;}
- function installWrappers(){wrap('showToast','กิจกรรม');wrap('showAlert','แจ้งเตือน');}
- installWrappers();let attempts=0;const timer=setInterval(()=>{installWrappers();if(++attempts>30)clearInterval(timer)},250);
+ window.posHooks.on('ui:notice',function(e){try{add(e.type,e.args.map(x=>typeof x==='string'?x:JSON.stringify(x)).join(' — '),'');}catch(_){}});
  window.addEventListener('error',e=>add('ERROR',e.message||'JavaScript error',(e.filename||'')+':'+(e.lineno||'')));
  window.addEventListener('unhandledrejection',e=>{const r=e.reason;add('ERROR','Promise ปฏิเสธ/งาน async ล้มเหลว',r?.message||String(r||''))});
  window.addEventListener('online',()=>add('INFO','เครือข่ายกลับมาออนไลน์',''));
  window.addEventListener('offline',()=>add('WARN','เครือข่ายออฟไลน์','ตรวจคิวซิงก์ก่อนปิดหน้า'));
  // Warn when the app's processing overlay stays visible; do not forcibly dismiss it or risk interrupting a save.
- let loadingSince=0, loadingWarned=false;setInterval(()=>{if(document.hidden)return;const text=(document.body?.innerText||'');const loading=/กำลังประมวลผลข้อมูล|กำลังโหลดข้อมูล|กำลังซิงก์/i.test(text);if(loading){if(!loadingSince)loadingSince=Date.now();if(!loadingWarned&&Date.now()-loadingSince>30000){loadingWarned=true;add('WARN','ตรวจพบหน้าประมวลผลนานเกิน 30 วินาที','อาจมีคำขอเครือข่ายหรือขั้นตอน async ค้างอยู่ ตรวจ Console/Network และ Supabase Logs');}}else{loadingSince=0;loadingWarned=false;}},15000);
+ let loadingSince=0, loadingWarned=false;setInterval(()=>{if(document.hidden)return;const ov=document.getElementById('loading-overlay');const loading=!!ov&&!ov.classList.contains('hidden');if(loading){if(!loadingSince)loadingSince=Date.now();if(!loadingWarned&&Date.now()-loadingSince>30000){loadingWarned=true;add('WARN','ตรวจพบหน้าประมวลผลนานเกิน 30 วินาที','อาจมีคำขอเครือข่ายหรือขั้นตอน async ค้างอยู่ ตรวจ Console/Network และ Supabase Logs');}}else{loadingSince=0;loadingWarned=false;}},15000);
  function products(){const d=window.db||{};const raw=d.products||{};return (Array.isArray(raw)?raw:Object.values(raw)).filter(p=>p&&!p.isDeleted&&p.deleted!==true)}
  function imgOf(p){
   const raw=String(p.imageUrl||p.image_url||p.photoUrl||p.photo_url||p.image||'').trim();
@@ -8011,42 +8112,11 @@ document.addEventListener('DOMContentLoaded',()=>{ensure();window.renderStockTab
   }catch(e){add('ERROR','ตรวจ Storage ไม่สำเร็จ',e?.message||String(e));$('sp-observe-status').textContent='ตรวจ Storage ไม่สำเร็จ: '+(e?.message||String(e))+' — ตรวจชื่อ bucket, session และ Storage RLS policy';}
   renderLog();
  }
- $('sp-observe-launch').addEventListener('click',()=>{$('sp-observe-panel').classList.add('open');render()});$('sp-observe-close').addEventListener('click',()=>$('sp-observe-panel').classList.remove('open'));$('sp-observe-refresh').addEventListener('click',render);$('sp-observe-storage').addEventListener('click',scanStorage);$('sp-observe-export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(read(),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='smartpos-activity-log.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});$('sp-observe-clear').addEventListener('click',()=>{if(confirm('ล้างประวัติ Log เฉพาะในเบราว์เซอร์เครื่องนี้?')){localStorage.removeItem(KEY);renderLog()}});
+ window.posHub.register({id:'observe',group:'system',icon:'🛠️',label:'ตรวจระบบ / Log',hint:'ประวัติและข้อผิดพลาด',run:()=>{$('sp-observe-panel').classList.add('open');render()}});$('sp-observe-close').addEventListener('click',()=>$('sp-observe-panel').classList.remove('open'));$('sp-observe-refresh').addEventListener('click',render);$('sp-observe-storage').addEventListener('click',scanStorage);$('sp-observe-export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(read(),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='smartpos-activity-log.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});$('sp-observe-clear').addEventListener('click',()=>{if(confirm('ล้างประวัติ Log เฉพาะในเบราว์เซอร์เครื่องนี้?')){localStorage.removeItem(KEY);renderLog()}});
  document.addEventListener('DOMContentLoaded',()=>{add('INFO','เปิดแอป Smart POS','ระบบบันทึกกิจกรรมในเบราว์เซอร์เริ่มทำงาน');render()});
 })();
 </script>
 
-
-<script id="header-tips-runtime">
-(function(){
-'use strict';
-var tip=document.createElement('div'); tip.id='hb-tip'; tip.setAttribute('role','status'); document.body.appendChild(tip);
-var T=null, $=function(id){return document.getElementById(id);};
-var txt=function(id){var e=$(id);return e?String(e.textContent||'').trim():'';};
-var shown=function(id){var e=$(id);return !!e&&!e.classList.contains('hidden')&&e.style.display!=='none';};
-var TIPS={
-  settings:function(){return '⚙️ ศูนย์การตั้งค่า';},
-  shift:function(){var open=txt('shift-status-label').indexOf('เปิดร้านอยู่')>=0; return '🗄️ เปิด/ปิดกะ — '+(open?'เปิดร้านอยู่ (แตะเพื่อปิดกะ)':'ยังไม่เปิดร้าน (แตะเพื่อเปิดกะ)');},
-  lock:function(){var u=txt('active-user-badge'); return '🔒 ล็อกหน้าจอ / สลับผู้ใช้'+(u?' — '+u:'');},
-  hold:function(){var n=shown('held-bills-count')?parseInt(txt('held-bills-count'),10)||0:0; return '📋 พักบิล'+(n?' — มี '+n+' บิลที่พักไว้':'');},
-  cart:function(){var n=shown('header-cart-count')?parseInt(txt('header-cart-count'),10)||0:0; return '🛒 ตะกร้า'+(n?' — '+n+' ชิ้น':' — ยังว่าง');},
-  sync:function(){var q=shown('sync-queue-badge')?txt('sync-queue-badge'):''; return '🔄 ซิงค์ข้อมูลกับ Supabase'+(q?' — '+q:'');},
-  scan:function(){return '📸 เปิด/ปิดกล้องสแกนบาร์โค้ด';}
-};
-function hide(){ tip.classList.remove('on'); }
-function show(btn){
-  var f=TIPS[btn.dataset.hb]; if(!f) return;
-  tip.textContent=f(); tip.classList.add('on');
-  var r=btn.getBoundingClientRect(), w=tip.offsetWidth, left=Math.max(6,Math.min(window.innerWidth-w-6,r.left+r.width/2-w/2));
-  tip.style.left=left+'px'; tip.style.top=(r.bottom+8)+'px';
-  clearTimeout(T); T=setTimeout(hide,1800);
-}
-document.addEventListener('pointerdown',function(e){ var b=e.target.closest&&e.target.closest('[data-hb]'); if(b) show(b); },true);
-document.addEventListener('mouseover',function(e){ var b=e.target.closest&&e.target.closest('[data-hb]'); if(b) show(b); });
-document.addEventListener('mouseout',function(e){ if(e.target.closest&&e.target.closest('[data-hb]')) hide(); });
-window.__headerTips={TIPS:TIPS};
-})();
-</script>
 
     <script>
     (function () {
@@ -8100,10 +8170,7 @@ window.__headerTips={TIPS:TIPS};
         body.innerHTML = '<p class="text-center text-xs font-bold text-slate-400 py-6">กำลังโหลดรายงาน…</p>';
         try {
           var pending = ((window.db && window.db.syncQueue) || []).filter(function (o) { return o.status !== 'done'; }).length;
-          // สรุปที่ฝั่งฐานข้อมูลก่อน (คำขอเดียว ไม่ต้องดึงบิลทุกใบมานับ) ถ้ายังไม่ได้รัน SMART-POS-PATCH-v2.2.sql จะถอยไปใช้วิธีเดิม
-          var sum = null;
-          try { var rr = await c.rpc('report_summary', { p_from: from, p_to: to }); if (!rr.error && rr.data) sum = rr.data; } catch (_e) { sum = null; }
-          var res = sum ? [sum.daily || [], sum.bills || [], sum.shifts || [], sum.ar || [], sum.ap || [], sum.stock || []] : await Promise.all([
+          var res = await Promise.all([
             fetchAll(function () { return c.from('v_daily_sales').select('*').gte('day', from).lte('day', to).order('day', { ascending: false }); }, 5),
             fetchAll(function () { return c.from('bills').select('id,payment_method,total,tax_amount,tax_mode,created_at').gte('created_at', startISO).lt('created_at', endISO).order('created_at'); }, 30),
             fetchAll(function () { return c.from('v_shift_summary').select('*').gte('opened_at', startISO).lt('opened_at', endISO).order('opened_at', { ascending: false }); }, 5),
@@ -8112,8 +8179,8 @@ window.__headerTips={TIPS:TIPS};
             fetchAll(function () { return c.from('v_stock_valuation').select('stock_value').order('variant_id'); }, 30)
           ]);
           var daily = res[0], bills = res[1], shifts = res[2], ar = res[3], ap = res[4], stock = res[5];
-          var zc = sum ? null : await c.from('product_variants').select('id', { count: 'exact', head: true }).eq('is_active', true).eq('cost_price', 0);
-          var zeroCost = sum ? (+sum.zero_cost || 0) : ((zc && !zc.error && typeof zc.count === 'number') ? zc.count : 0);
+          var zc = await c.from('product_variants').select('id', { count: 'exact', head: true }).eq('is_active', true).eq('cost_price', 0);
+          var zeroCost = (zc && !zc.error && typeof zc.count === 'number') ? zc.count : 0;
           lastDaily = daily;
           var t = { bills: 0, gross: 0, disc: 0, net: 0, refunds: 0, cogs: 0, profit: 0 };
           daily.forEach(function (d) { t.bills += num(d.bills); t.gross += num(d.gross_sales); t.disc += num(d.discounts); t.net += num(d.net_sales); t.refunds += num(d.refunds); t.cogs += num(d.cogs); t.profit += num(d.gross_profit); });
@@ -8165,7 +8232,7 @@ window.__headerTips={TIPS:TIPS};
           body.innerHTML = html;
         } catch (e) {
           console.error('report failed', e);
-          body.innerHTML = card('โหลดรายงานไม่สำเร็จ', '<p class="text-xs text-rose-600 break-words">' + esc(e && e.message ? e.message : e) + '</p><p class="text-[10px] text-slate-400 mt-2">ตรวจว่ารัน SMART-POS-SETUP-v2.sql แล้ว และล็อกอินด้วยบัญชีที่ได้รับสิทธิ์</p>');
+          body.innerHTML = card('โหลดรายงานไม่สำเร็จ', '<p class="text-xs text-rose-600 break-words">' + esc(e && e.message ? e.message : e) + '</p><p class="text-[10px] text-slate-400 mt-2">ตรวจว่ารัน SMART-POS-FULL-v13.sql แล้ว และล็อกอินด้วยบัญชีที่ได้รับสิทธิ์</p>');
         }
       };
 
@@ -8184,7 +8251,6 @@ window.__headerTips={TIPS:TIPS};
       };
     })();
     </script>
-<!-- ===== v11: เสียงแจ้งเตือน + แผนผังชั้นวางสินค้า ===== -->
 <script>
 (function () {
   'use strict';
@@ -8237,101 +8303,57 @@ window.__headerTips={TIPS:TIPS};
   ['pointerdown', 'touchend'].forEach(ev =>
     document.addEventListener(ev, () => audio(), { once: true, passive: true }));
 
-  // ---------- ปุ่มเปิด/ปิดเสียง ----------
-  function renderSoundToggle() {
-    let b = document.getElementById('pos-sound-toggle');
-    if (!b) {
-      b = document.createElement('button');
-      b.id = 'pos-sound-toggle';
-      b.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:9990;width:44px;height:44px;border-radius:22px;border:1px solid #cbd5e1;background:#fff;font-size:20px;box-shadow:0 2px 6px rgba(0,0,0,.15)';
-      b.onclick = () => {
-        localStorage.setItem('pos_sound_on', soundOn() ? '0' : '1');
-        renderSoundToggle();
-        if (soundOn()) SFX.add();
-      };
-      document.body.appendChild(b);
+  // ---------- เครื่องมือ: เปิด/ปิดเสียง (อยู่ในศูนย์เครื่องมือ ไม่มีปุ่มลอย) ----------
+  window.posHub.register({
+    id: 'sound', group: 'look', keepOpen: true,
+    icon: () => (soundOn() ? '🔊' : '🔇'),
+    label: 'เสียงแจ้งเตือน',
+    hint: () => (soundOn() ? 'เปิดอยู่' : 'ปิดอยู่'),
+    run: () => { localStorage.setItem('pos_sound_on', soundOn() ? '0' : '1'); if (soundOn()) SFX.add(); }
+  });
+
+  // ---------- เสียงในขั้นตอนขาย (รับเหตุการณ์จากฟังก์ชันขายหลัก) ----------
+  posHooks.on('cart:add', () => SFX.add());
+
+  posHooks.on('cart:open', () => {
+    if (safeCartCount() > 0) {
+      const total = Number(window.currentCartTotal()) || 0;
+      SFX.total();
+      speak('ยอดรวม ' + money(total) + ' บาท');
     }
-    b.textContent = soundOn() ? '🔊' : '🔇';
-    b.title = soundOn() ? 'เสียงเปิดอยู่ (แตะเพื่อปิด)' : 'เสียงปิดอยู่ (แตะเพื่อเปิด)';
-  }
-
-  // ---------- ฮุกเสียงในขั้นตอนขาย (ห่อฟังก์ชันเดิม ไม่แก้ไส้ใน) ----------
-  const origAdd = window.addUnifiedToCart;
-  if (typeof origAdd === 'function') {
-    window.addUnifiedToCart = function () {
-      const before = safeCartCount();
-      const r = origAdd.apply(this, arguments);
-      if (safeCartCount() > before) SFX.add();
-      return r;
-    };
-  }
-
-  const origOpenCart = window.openCartModal;
-  if (typeof origOpenCart === 'function') {
-    window.openCartModal = function () {
-      const r = origOpenCart.apply(this, arguments);
-      if (safeCartCount() > 0) {
-        const total = Number(window.currentCartTotal()) || 0;
-        SFX.total();
-        speak('ยอดรวม ' + money(total) + ' บาท');
-      }
-      return r;
-    };
-  }
+  });
 
   let changeTimer = null, lastSpokenChange = null;
-  const origCalc = window.calcChange;
-  if (typeof origCalc === 'function') {
-    window.calcChange = function () {
-      const r = origCalc.apply(this, arguments);
-      const total = Number(window.currentCartTotal()) || 0;
-      const received = parseFloat(document.getElementById('pay-cash-received')?.value) || 0;
-      const change = Math.round((received - total) * 100) / 100;
-      // พูดเงินทอนหลังผู้ใช้หยุดพิมพ์ 0.9 วินาที และพูดเฉพาะเมื่อค่าเปลี่ยน
-      clearTimeout(changeTimer);
-      if (received > 0 && total > 0 && change >= 0 && change !== lastSpokenChange) {
-        changeTimer = setTimeout(() => {
-          lastSpokenChange = change;
-          speak('เงินทอน ' + money(change) + ' บาท');
-        }, 900);
-      }
-      return r;
-    };
-  }
+  posHooks.on('pay:calc', () => {
+    const total = Number(window.currentCartTotal()) || 0;
+    const received = parseFloat(document.getElementById('pay-cash-received')?.value) || 0;
+    const change = Math.round((received - total) * 100) / 100;
+    // พูดเงินทอนหลังผู้ใช้หยุดพิมพ์ 0.9 วินาที และพูดเฉพาะเมื่อค่าเปลี่ยน
+    clearTimeout(changeTimer);
+    if (received > 0 && total > 0 && change >= 0 && change !== lastSpokenChange) {
+      changeTimer = setTimeout(() => {
+        lastSpokenChange = change;
+        speak('เงินทอน ' + money(change) + ' บาท');
+      }, 900);
+    }
+  });
 
-  const origPay = window.processPaymentRequest;
-  if (typeof origPay === 'function') {
-    window.processPaymentRequest = async function () {
-      const billsBefore = (db.bills || []).length;
-      const total = Number(window.currentCartTotal()) || 0;
-      const received = parseFloat(document.getElementById('pay-cash-received')?.value) || 0;
-      const isCash = typeof activePayMethod !== 'undefined' && activePayMethod === 'CASH';
-      let res;
-      try { res = await origPay.apply(this, arguments); }
-      catch (e) { SFX.error(); throw e; }
-      // นับเป็นขายสำเร็จเฉพาะเมื่อมีบิลเพิ่มขึ้นจริง (ไม่นับการพิมพ์ใบเสร็จซ้ำ)
-      if ((db.bills || []).length > billsBefore) {
-        SFX.paid();
-        try { document.dispatchEvent(new CustomEvent('pos:sale-complete', { detail: {
-          total: total, received: received,
-          change: (isCash && total > 0 && received >= total) ? Math.round((received - total) * 100) / 100 : 0
-        } })); } catch (e) {}
-        setTimeout(() => {
-          if (isCash && total > 0 && received >= total) {
-            const change = Math.round((received - total) * 100) / 100;
-            speak('รับเงิน ' + money(received) + ' บาท ' +
-                  (change > 0 ? 'เงินทอน ' + money(change) + ' บาท ' : '') + 'ขอบคุณค่ะ');
-          } else {
-            speak('ขอบคุณค่ะ');
-          }
-          lastSpokenChange = null;
-        }, 500);
+  posHooks.on('pay:error', () => SFX.error());
+  posHooks.on('pay:end', e => {
+    // นับเป็นขายสำเร็จเฉพาะเมื่อมีบิลเพิ่มขึ้นจริง (ไม่นับการพิมพ์ใบเสร็จซ้ำ)
+    if (!e.sold) { SFX.error(); return; }
+    SFX.paid();
+    setTimeout(() => {
+      if (e.isCash && e.total > 0 && e.received >= e.total) {
+        const change = Math.round((e.received - e.total) * 100) / 100;
+        speak('รับเงิน ' + money(e.received) + ' บาท ' +
+              (change > 0 ? 'เงินทอน ' + money(change) + ' บาท ' : '') + 'ขอบคุณค่ะ');
       } else {
-        SFX.error();
+        speak('ขอบคุณค่ะ');
       }
-      return res;
-    };
-  }
+      lastSpokenChange = null;
+    }, 500);
+  });
 
   // =====================================================================
   // แผนผังชั้นวางสินค้า: จุดเก็บรหัส "โซน-ชั้น-ช่อง" เช่น A-2-3
@@ -8497,21 +8519,14 @@ window.__headerTips={TIPS:TIPS};
     const m = ensureMapModal();
     m.style.display = 'block';
     renderMap();
+    posHooks.emit('shelf:open');
   };
 
-  function renderMapButton() {
-    if (document.getElementById('pos-map-btn')) return;
-    const b = document.createElement('button');
-    b.id = 'pos-map-btn';
-    b.textContent = '🗺️ แผนผังร้าน';
-    b.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:9990;padding:10px 14px;border-radius:14px;border:0;background:#4f46e5;color:#fff;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.2)';
-    b.onclick = () => window.openShelfMap();
-    document.body.appendChild(b);
-  }
+  window.posHub.register({
+    id: 'map', group: 'ops', icon: '🗺️', label: 'แผนผังร้าน', hint: 'ตำแหน่งชั้นวาง',
+    run: () => window.openShelfMap()
+  });
 
-  document.addEventListener('DOMContentLoaded', () => { renderSoundToggle(); renderMapButton(); });
-  // ถ้าสคริปต์โหลดหลัง DOMContentLoaded แล้ว ให้สร้างปุ่มทันที
-  if (document.readyState !== 'loading') { renderSoundToggle(); renderMapButton(); }
   // ตัวช่วยกลางสำหรับโมดูลถัดไป (ประกาศครั้งเดียวที่นี่)
   const esc = s => (window.escapeHTML ? window.escapeHTML(s) : String(s == null ? '' : s));
   window.POS = { CODE_RE, esc, money, soundOn, speak, audio, SFX, allVariants, layoutInfo, itemsAt, zoneOf: code => { const m = CODE_RE.exec(code || ''); return m ? m[1] : null; }, findVariant: (pid, vid) => { const p = db.products[pid]; if (!p) return null; const v = (p.variants || []).find(x => x.id === vid); return v ? { p, v } : null; } };
@@ -8519,7 +8534,6 @@ window.__headerTips={TIPS:TIPS};
 })();
 </script>
 
-<!-- ===== v12: ตำแหน่งสินค้า (ตารางสินค้า + ตัวเลือกภาพ + นำทางหน้าขาย) ===== -->
 <style>
 @keyframes posPulse { 0% { box-shadow: 0 0 0 0 rgba(79,70,229,.65); } 70% { box-shadow: 0 0 0 12px rgba(79,70,229,0); } 100% { box-shadow: 0 0 0 0 rgba(79,70,229,0); } }
 @keyframes posBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
@@ -8699,31 +8713,18 @@ window.__headerTips={TIPS:TIPS};
   }
   function hideGuide() { if (guideEl) guideEl.remove(); guideEl = null; clearTimeout(guideTimer); }
 
-  const origAdd = window.addUnifiedToCart;
-  if (typeof origAdd === 'function') {
-    window.addUnifiedToCart = function (pid, vid, fid, evt) {
-      const r = origAdd.apply(this, arguments);
-      const f = findVariant(pid, vid);
-      if (f && f.v.locationCode && zoneOf(f.v.locationCode)) showGuide(f.p.name + ' (' + (f.v.sizeName || 'ปกติ') + ')', f.v.locationCode);
-      return r;
-    };
-  }
+  posHooks.on('cart:add', e => {
+    const f = findVariant(e.productId, e.variantId);
+    if (f && f.v.locationCode && zoneOf(f.v.locationCode)) showGuide(f.p.name + ' (' + (f.v.sizeName || 'ปกติ') + ')', f.v.locationCode);
+  });
 
   // ---------- ติดตั้งคอลัมน์/ปุ่มเมื่อตารางแสดงผล ----------
-  const origRender = window.renderStockTable;
-  if (typeof origRender === 'function') {
-    window.renderStockTable = function () {
-      const r = origRender.apply(this, arguments);
-      addBulkButtons();
-      return r;
-    };
-  }
+  posHooks.on('stock:render', addBulkButtons);
   document.addEventListener('DOMContentLoaded', addBulkButtons);
   if (document.readyState !== 'loading') addBulkButtons();
 })();
 </script>
 
-<!-- ===== v13: ลูกเล่น/อนิเมชันหน้าขาย (เคารพการลดการเคลื่อนไหว) ===== -->
 <style>
 /* 1) ผู้ใช้ที่ตั้งค่า "ลดการเคลื่อนไหว" ใน iPadOS จะไม่เห็นอนิเมชันที่หมุนหรือกระพือ */
 @media (prefers-reduced-motion: reduce) {
@@ -8799,17 +8800,11 @@ button:not(:disabled):active { transform: scale(.96); }
     });
   }
 
-  // ---------- ฮุกจากฟังก์ชันขายสำเร็จ (ส่งเหตุการณ์จากชั้นเสียงใน v11) ----------
-  window.posNotifySale = function (detail) {
-    try { document.dispatchEvent(new CustomEvent('pos:sale-complete', { detail })); } catch (e) {}
-  };
-
   document.addEventListener('DOMContentLoaded', watchTotals);
   if (document.readyState !== 'loading') watchTotals();
 })();
 </script>
 
-<!-- ===== v14: ค้นหาด้วยตำแหน่ง + ตรวจนับตามช่อง ===== -->
 <script>
 (function () {
   'use strict';
@@ -8828,6 +8823,7 @@ button:not(:disabled):active { transform: scale(.96); }
   // (แก้ในโค้ดหลักแล้ว: isMatchSearch ตรวจ v.locationCode ด้วย)
 
   // ---------- 2) แผนผัง: แถบค้นหาสินค้าและปุ่มตรวจนับ ----------
+  posHooks.on('shelf:open', () => ensureBar());
   function ensureBar() {
     const box = document.getElementById('pos-shelf-box');
     if (!box || document.getElementById('pos-v14-bar')) return;
@@ -8947,19 +8943,9 @@ button:not(:disabled):active { transform: scale(.96); }
     window.finishBulkSync?.('ตรวจนับ');
   }
 
-  // ---------- ติดตั้งเมื่อเปิดแผนผัง ----------
-  const origOpen = window.openShelfMap;
-  if (typeof origOpen === 'function') {
-    window.openShelfMap = function () {
-      const r = origOpen.apply(this, arguments);
-      ensureBar();
-      return r;
-    };
-  }
 })();
 </script>
 
-<!-- ===== v15: สิทธิ์การใช้งานรวมศูนย์ (ล็อกอินครั้งเดียว ไม่ถาม PIN ซ้ำ) ===== -->
 <script>
 (function () {
   'use strict';
@@ -9046,19 +9032,6 @@ button:not(:disabled):active { transform: scale(.96); }
     SYNC_CONFIG: ['saveSupabaseConfig']
   };
   Object.keys(MAP).forEach(perm => MAP[perm].forEach(n => guard(n, perm)));
-
-  // การขายที่ต้องใช้สิทธิ์เพิ่ม (เชื่อ, ส่วนลด) ตรวจตอนกดชำระ
-  const pay = window.processPaymentRequest;
-  if (typeof pay === 'function' && !pay.__guard) {
-    window.processPaymentRequest = function () {
-      if (!window.canDo('SALE')) return denied('SALE');
-      if (typeof activePayMethod !== 'undefined' && activePayMethod === 'CREDIT' && !window.canDo('CREDIT_SALE')) return denied('CREDIT_SALE');
-      const disc = parseFloat(document.getElementById('cart-discount-input')?.value) || 0;
-      if (disc > 0 && !window.canDo('DISCOUNT')) return denied('DISCOUNT');
-      return pay.apply(this, arguments);
-    };
-    window.processPaymentRequest.__guard = true;
-  }
 
   // ---------- ผู้ใช้: ตัวช่วย ----------
   const db0 = () => window.db;
@@ -9215,46 +9188,16 @@ button:not(:disabled):active { transform: scale(.96); }
     persistAll();
   };
 
-  // ---------- หน้าล็อกอิน: ซ่อนผู้ใช้ที่ปิดการใช้งาน ----------
-  const origRenderLogin = window.renderEmployeeLoginScreen;
-  if (typeof origRenderLogin === 'function') {
-    window.renderEmployeeLoginScreen = function () {
-      const r = origRenderLogin.apply(this, arguments);
-      const off = new Set((db0().users || []).filter(u => u.active === false).map(u => u.id));
-      document.querySelectorAll('#login-employee-select button').forEach(b => {
-        const m = /selectEmployeeForLogin\('([^']+)'\)/.exec(b.getAttribute('onclick') || '');
-        if (m && off.has(m[1])) b.remove();
-      });
-      return r;
-    };
-  }
-
-  // ---------- ปุ่มเข้าหน้าผู้ใช้ (แสดงเฉพาะผู้ที่มีสิทธิ์ USERS) ----------
-  function renderUsersButton() {
-    let b = document.getElementById('pos-users-btn');
-    const show = window.canDo('USERS') && !!window.db.activeUser;
-    if (!b) {
-      b = document.createElement('button'); b.id = 'pos-users-btn';
-      b.textContent = '👥'; b.title = 'ผู้ใช้และสิทธิ์';
-      b.style.cssText = 'position:fixed;left:64px;bottom:12px;z-index:9990;width:44px;height:44px;border-radius:22px;border:1px solid #cbd5e1;background:#fff;font-size:20px;box-shadow:0 2px 6px rgba(0,0,0,.15)';
-      b.onclick = () => window.openUsersPanel();
-      document.body.appendChild(b);
-    }
-    b.style.display = show ? '' : 'none';
-  }
-  const origBadge = window.updateActiveUserBadge;
-  window.updateActiveUserBadge = function () {
-    const r = typeof origBadge === 'function' ? origBadge.apply(this, arguments) : undefined;
-    renderUsersButton();
-    return r;
-  };
-  document.addEventListener('DOMContentLoaded', renderUsersButton);
-  if (document.readyState !== 'loading') renderUsersButton();
+  // ---------- เครื่องมือ: ผู้ใช้และสิทธิ์ (แสดงเฉพาะผู้ที่มีสิทธิ์ USERS) ----------
+  window.posHub.register({
+    id: 'users', group: 'system', icon: '👥', label: 'ผู้ใช้และสิทธิ์',
+    visible: () => window.canDo('USERS') && !!window.db.activeUser,
+    run: () => window.openUsersPanel()
+  });
 })();
 </script>
 
 
-<!-- ===== v16: เซสชันพนักงาน (token จากเซิร์ฟเวอร์) ===== -->
 <script>
 (function () {
   'use strict';
@@ -9279,6 +9222,8 @@ button:not(:disabled):active { transform: scale(.96); }
       else localStorage.removeItem(KEY);
     } catch (e) { /* ออฟไลน์: ไม่มี token ใช้กติกาเดิม */ }
   }
+  posHooks.on('auth:login', u => obtainSession(u));   // ล็อกอินสำเร็จ -> ขอ token
+  posHooks.on('auth:lock', () => endSession());
   async function endSession() {
     const t = window.posSessionToken();
     localStorage.removeItem(KEY);
@@ -9286,36 +9231,9 @@ button:not(:disabled):active { transform: scale(.96); }
     try { await window.getSupabaseClient?.()?.rpc('employee_logout', { p_session: t }); } catch (e) {}
   }
 
-  // ห่อการล็อกอินด้วย PIN: เมื่อสำเร็จให้ขอ token
-  const origVerify = window.verifyEmployeePin;
-  if (typeof origVerify === 'function') {
-    window.verifyEmployeePin = async function () {
-      const before = window.db && window.db.activeUser;
-      const r = await origVerify.apply(this, arguments);
-      const now = window.db && window.db.activeUser;
-      if (now && now !== before) obtainSession(now);
-      return r;
-    };
-  }
-  const origLock = window.lockPOS;
-  if (typeof origLock === 'function') {
-    window.lockPOS = function () { endSession(); return origLock.apply(this, arguments); };
-  }
-  // คิวปรับสต็อก: แนบ token ตอนนั้นไปด้วย เพื่อให้ผู้ที่ทำรายการถูกตรวจสิทธิ์
-  const origEnqueue = window.enqueueSync;
-  if (typeof origEnqueue === 'function') {
-    window.enqueueSync = function (op, a, b) {
-      if (op && ['adjust', 'sale', 'delete'].includes(op.type) && op.payload && !op.payload.sessionToken) {
-        const t = window.posSessionToken();
-        if (t) op.payload.sessionToken = t;
-      }
-      return origEnqueue.call(this, op, a, b);
-    };
-  }
 })();
 </script>
 
-<!-- ===== v17: เพิ่ม/แก้ไข/ลบขนาดของสินค้า (ขนาดท่อ PVC มาตรฐาน เรียงลำดับ) ===== -->
 <script>
 (function () {
   'use strict';
@@ -9548,14 +9466,12 @@ button:not(:disabled):active { transform: scale(.96); }
     b.onclick = () => window.openAddSizes();
     bar.appendChild(b);
   }
-  const origRender = window.renderStockTable;
-  if (typeof origRender === 'function') window.renderStockTable = function () { const r = origRender.apply(this, arguments); ensureButton(); return r; };
+  posHooks.on('stock:render', ensureButton);
   document.addEventListener('DOMContentLoaded', ensureButton);
   if (document.readyState !== 'loading') ensureButton();
 })();
 </script>
 
-<!-- ===== v18: ระบบสร้างบาร์โค้ตอัตโนมัติเมื่อผู้ใช้ไม่ได้กรอก ===== -->
 <script>
 (function () {
   'use strict';
@@ -9595,33 +9511,15 @@ button:not(:disabled):active { transform: scale(.96); }
   }
   window.posFillBarcodes = fillMissingBarcodes;
 
-  // เติมก่อนบันทึกทุกครั้ง
-  const wp = window.persist;
-  if (typeof wp === 'function' && !wp.__barcodeWrapped) {
-    const w = function () { try { fillMissingBarcodes(); } catch (e) { console.warn('barcode fill', e); } return wp.apply(this, arguments); };
-    w.__barcodeWrapped = true;
-    window.persist = w;
-  }
-  // เติมก่อนซิงก์ขึ้นฐาน (กันกรณีบันทึกโดยไม่ผ่าน window.persist)
-  const sp = window.syncProductsToSupabase;
-  if (typeof sp === 'function' && !sp.__barcodeWrapped) {
-    const w2 = function () { try { if (fillMissingBarcodes() > 0) { try { persist(); } catch (e) {} } } catch (e) {} return sp.apply(this, arguments); };
-    w2.__barcodeWrapped = true;
-    window.syncProductsToSupabase = w2;
-  }
+  // เติมก่อนบันทึกทุกครั้ง และก่อนซิงก์สินค้าขึ้นฐาน
+  posHooks.on('persist', () => { try { fillMissingBarcodes(); } catch (e) { console.warn('barcode fill', e); } });
+  posHooks.on('sync:products', () => { try { if (fillMissingBarcodes() > 0) persist(); } catch (e) {} });
   // เติมให้ทันทีเมื่อเปิดแอป
   document.addEventListener('DOMContentLoaded', () => { try { if (fillMissingBarcodes() > 0) window.persist?.(); } catch (e) {} });
 })();
 </script>
 
-<!-- ===== v19: จัดปุ่มลอยไม่ให้ซ้อนกัน + หน้าปรับแต่งเสียง/หน้าจอ/การสัมผัส ===== -->
 <style id="pos-v19-css">
-  /* กลุ่มปุ่มลอย: อยู่เหนือแถบเมนูล่าง ไม่ทับกัน */
-  #pos-sound-toggle { left: 12px !important; bottom: 84px !important; }
-  #pos-users-btn    { left: 64px !important; bottom: 84px !important; }
-  #pos-settings-btn { left: 116px !important; bottom: 84px !important; position: fixed; z-index: 9990; width: 44px; height: 44px; border-radius: 22px; border: 1px solid #cbd5e1; background: #fff; font-size: 20px; box-shadow: 0 4px 12px rgba(15,23,42,.15); }
-  #pos-shelf-btn    { right: 12px !important; bottom: 140px !important; }
-  #sp-observe-launch { right: 12px !important; bottom: 84px !important; }
   /* ปุ่มสัมผัสขนาดใหญ่ */
   html.pos-touch-big button, html.pos-touch-big .btn-touch { min-height: 48px; }
   html.pos-touch-big nav button, html.pos-touch-big .bottom-nav button { min-height: 56px; }
@@ -9666,26 +9564,6 @@ button:not(:disabled):active { transform: scale(.96); }
       return origSpeak(u);
     };
     synth.__v19 = true;
-  }
-
-  function ensureSettingsBtn() {
-    if (document.getElementById('pos-settings-btn')) return;
-    const b = document.createElement('button'); b.id = 'pos-settings-btn'; b.type = 'button';
-    b.setAttribute('aria-label', 'ปรับแต่งเสียงและหน้าจอ'); b.textContent = '🎨';
-    b.onclick = openSettings; document.body.appendChild(b);
-  }
-  window.posShelfPlace = ensureShelfId;
-  function ensureShelfId() {
-    document.querySelectorAll('button').forEach(x => {
-      if (x.textContent.indexOf('แผนผังร้าน') < 0) return;
-      if (!x.id) x.id = 'pos-shelf-btn';
-      // จัดตำแหน่งตรงๆ ให้อยู่เหนือแถบเมนู ไม่ทับปุ่มอื่น
-      x.style.setProperty('position', 'fixed', 'important');
-      x.style.setProperty('right', '12px', 'important');
-      x.style.setProperty('bottom', '140px', 'important');
-      x.style.setProperty('left', 'auto', 'important');
-      x.style.setProperty('z-index', '9990', 'important');
-    });
   }
 
   function ensureModal() {
@@ -9735,15 +9613,12 @@ button:not(:disabled):active { transform: scale(.96); }
   }
   function openSettings() { ensureModal(); refresh(); document.getElementById('pos-settings-modal').style.display = 'block'; }
   window.posOpenSettings = openSettings;
+  window.posHub.register({ id: 'screen', group: 'look', icon: '🎨', label: 'ปรับแต่งหน้าจอ', hint: 'สี • ขนาดตัวอักษร', run: openSettings });
 
   applyTheme();
-  document.addEventListener('DOMContentLoaded', () => { ensureSettingsBtn(); ensureShelfId(); });
-  if (document.readyState !== 'loading') { ensureSettingsBtn(); ensureShelfId(); }
-  window.addEventListener('resize', ensureShelfId);
 })();
 </script>
 
-<!-- ===== v20: เลือกหลายรายการจากตารางสินค้า ลงใบรับของเข้าคลัง ===== -->
 <script>
 (function () {
   'use strict';
@@ -9821,7 +9696,6 @@ button:not(:disabled):active { transform: scale(.96); }
 </script>
 
 
-<!-- ===== v21: รูปสินค้าในฟอร์ม (เลือกจากคลัง / วางลิงก์) + ลดการทำงานเบื้องหลัง ===== -->
 <script>
 (function () {
   'use strict';
@@ -9842,17 +9716,10 @@ button:not(:disabled):active { transform: scale(.96); }
     if (!/^https?:\/\//i.test(v)) { window.showAlert?.('ลิงก์ไม่ถูกต้อง', 'ลิงก์รูปต้องขึ้นต้นด้วย https://', true); return; }
     pmPhotoDataUrl = v; pmPhotoChanged = true; showPreview(v);
   };
-  // รวมตัวเลือกปุ่มแผนผังร้านเมื่อวาดตารางใหม่ (แทนการสแกนทุกวินาที)
-  const origRender = window.renderStockTable;
-  if (typeof origRender === 'function' && !origRender.__v21) {
-    const w = function () { const r = origRender.apply(this, arguments); window.posShelfPlace?.(); return r; };
-    w.__v21 = true; window.renderStockTable = w;
-  }
 })();
 </script>
 
 
-<!-- ===== v22: แนะนำการสั่งซื้อจากสต็อกต่ำ (ส่งเข้าใบรับ / ส่งออก CSV) ===== -->
 <script>
 (function () {
   'use strict';
@@ -9954,7 +9821,6 @@ button:not(:disabled):active { transform: scale(.96); }
 })();
 </script>
 
-<!-- ===== v23: เลือกสินค้าสั่งซื้อจากตาราง (แทนรายการดรอปดาวน์) ===== -->
 <script>
 (function () {
   'use strict';
@@ -9974,14 +9840,14 @@ button:not(:disabled):active { transform: scale(.96); }
     m = document.createElement('div'); m.id = 'pos-pickpo';
     m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9997;background:rgba(15,23,42,.6);padding:10px;overflow:auto';
     m.innerHTML = '<div style="max-width:900px;margin:8px auto;background:#fff;border-radius:16px;padding:14px;font-family:Sarabun,sans-serif;color:#0f172a">' +
-      '<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">🔍 เลือกสินค้าที่จะสั่ง</b><button id="pp-close" style="border:0;background:#e2e8f0;border-radius:10px;padding:8px 12px;font-weight:700">ปิด</button></div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">🔍 เลือกสินค้าที่จะสั่ง</b><button id="ppx-close" style="border:0;background:#e2e8f0;border-radius:10px;padding:8px 12px;font-weight:700">ปิด</button></div>' +
       '<input id="pp-q" placeholder="ค้นหาชื่อ / ขนาด / SKU / บาร์โค้ด" autocomplete="off" style="width:100%;box-sizing:border-box;margin:10px 0;padding:10px;border:1px solid #cbd5e1;border-radius:10px;min-height:44px">' +
       '<div id="pp-count" style="font-size:12px;color:#64748b;margin-bottom:4px"></div>' +
       '<div style="overflow:auto;max-height:60vh"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:#f1f5f9;position:sticky;top:0"><th style="padding:6px;text-align:left">สินค้า / ขนาด</th><th>SKU</th><th>คงเหลือ</th><th>ทุน</th><th></th></tr></thead><tbody id="pp-body"></tbody></table></div>' +
       '<button id="pp-more" style="display:none;width:100%;margin-top:8px;padding:10px;border-radius:10px;border:1px dashed #94a3b8;background:#fff;font-weight:700">แสดงเพิ่ม</button></div>';
     document.body.appendChild(m);
     const close = () => { m.style.display = 'none'; };
-    document.getElementById('pp-close').onclick = close;
+    document.getElementById('ppx-close').onclick = close;
     m.addEventListener('click', e => { if (e.target === m) close(); });
     let t = null;
     document.getElementById('pp-q').oninput = e => { clearTimeout(t); t = setTimeout(() => applyFilter(e.target.value), 150); };
