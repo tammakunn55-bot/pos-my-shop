@@ -8,18 +8,28 @@
 // - ข้อมูล/API ของ Supabase ใช้เครือข่ายเสมอ ไม่เก็บใน cache
 
 const SHELL_PREFIX = 'pos-shell-';
-const IMG_CACHE = 'pos-img-v1';
+const IMG_CACHE = 'pos-img-1';
 const IMG_MAX_ENTRIES = 2500;
 
 // ต้องตรงกับ URL ใน <script src> ของ index.html ทุกตัว (ไม่งั้นเปิดออฟไลน์ครั้งแรกไม่ได้)
 const SHELL = [
-  './', './index.html', './manifest.webmanifest', './icon.svg',
-  './icon-192.png', './icon-512.png', './icon-maskable-512.png',
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4',
-  'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
-  'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js'
+  './', './index.html', './manifest.webmanifest',
+  './icon.svg', './icon-192.png', './icon-512.png',
+  './icon-maskable-512.png', 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4', 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', 'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js',
+  './js/01.js', './js/02.js', './js/03.js',
+  './js/04.js', './js/05.js', './js/06.js',
+  './js/07.js', './js/08.js', './js/09.js',
+  './js/10.js', './js/11.js', './js/12.js',
+  './js/13.js', './js/14.js', './js/15.js',
+  './js/16.js', './js/17.js', './js/18.js',
+  './js/19.js', './js/20.js', './js/21.js',
+  './js/22.js', './js/23.js', './js/24.js',
+  './js/25.js', './js/26.js', './js/27.js',
+  './js/28.js', './css/01.css', './css/02.css',
+  './css/03.css', './css/04.css', './css/05.css',
+  './css/06.css', './css/07.css', './css/08.css',
+  './css/09.css',
 ];
 
 // คำนวณเลขเวอร์ชันจากเนื้อหา index.html + รายการ SHELL (SHA-256 ตัดเหลือ 12 ตัวอักษร)
